@@ -2,13 +2,9 @@
 
 Interaktive Karte für faire Arbeitswege zwischen Koblenz und Cochem.
 
-**Vorbereitet für GitHub Pages.** Die automatische Freischaltung wurde von GitHub wegen fehlender Pages-Berechtigung der Integration abgewiesen (HTTP 403). Einmalig unter https://github.com/amiiinoxy/Mein-Projekt/settings/pages einstellen:
+**Website:** https://amiiinoxy.github.io/Mein-Projekt/
 
-1. Source: **Deploy from a branch**.
-2. Branch: **wohnortvergleich**, Ordner **/(root)**.
-3. **Save** wählen und den Build abwarten.
-
-Der Browser-Link nach erfolgreicher Freischaltung ist https://amiiinoxy.github.io/Mein-Projekt/ . Vor der Freischaltung ist die Seite dort noch nicht erreichbar. Die Karte lässt sich bereits als ZIP herunterladen und lokal mit `index.html` öffnen.
+GitHub Pages veröffentlicht den Branch `wohnortvergleich` aus dem Ordner `/(root)`. Für die kostenlose GitHub-Adresse bleibt **Custom domain leer**; es wird keine CNAME-Datei benötigt. Die eigene Domain-Zuordnung wurde entfernt und die Veröffentlichung am 27.10.2026 von GitHub erfolgreich abgeschlossen.
 
 ![Vorschau der interaktiven Wohnortkarte](Wohnen/vorschau.png)
 
