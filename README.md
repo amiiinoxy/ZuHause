@@ -2,7 +2,15 @@
 
 Interaktive Karte für faire Arbeitswege zwischen Koblenz und Cochem.
 
-**Browser-Link:** https://amiiinoxy.github.io/Mein-Projekt/
+**Vorbereitet für GitHub Pages.** Die automatische Freischaltung wurde von GitHub wegen fehlender Pages-Berechtigung der Integration abgewiesen (HTTP 403). Einmalig unter https://github.com/amiiinoxy/Mein-Projekt/settings/pages einstellen:
+
+1. Source: **Deploy from a branch**.
+2. Branch: **wohnortvergleich**, Ordner **/(root)**.
+3. **Save** wählen und den Build abwarten.
+
+Der Browser-Link nach erfolgreicher Freischaltung ist https://amiiinoxy.github.io/Mein-Projekt/ . Vor der Freischaltung ist die Seite dort noch nicht erreichbar. Die Karte lässt sich bereits als ZIP herunterladen und lokal mit `index.html` öffnen.
+
+![Vorschau der interaktiven Wohnortkarte](Wohnen/vorschau.png)
 
 Enthalten sind 14 mögliche Wohnorte, Auto-/Rad-/Fußwegmodelle zu beiden Stadtzentren, separat verlinkte Bus-/Bahn-Fahrplansuche, Favoriten und ein Vergleich von bis zu vier Orten. Autobahnen, Bundes-/Landesstraßen, Bahnstrecken, Wald und Ortslagen lassen sich über den Ebenenschalter rechts oben ein- und ausschalten. Fitnessstudios und benannte Bäder haben eigene Kategorien und einen Suchradius von 10 km Luftlinie; der sonstige Alltagsradius beträgt 1,5 km.
 
