@@ -30,7 +30,7 @@ Wald: DLM250 AX_Wald, Objektart 43002. Landwirtschaft: AX_Landwirtschaft, Objekt
 
 ## Fotos, Quellenkorrekturen und Lizenzen
 
-Es werden die in der Urhebertabelle genannten Originaldateien von Wikimedia Commons verwendet. Die API-Metadaten jedes Bildes wurden gespeichert und die Originaldateien heruntergeladen. Die Bilder werden vollständig, ohne Beschnitt und ohne inhaltliche Bearbeitung in Bildrahmen eingepasst; ihre Größen ändern sich nur für den Kartendruck. Die Lizenzangaben der Tabelle wurden mit Commons verglichen. Ruppertsklamm, Malbergturm, Emser Therme und Kloster Arnstein stehen dort unter CC BY-SA 4.0 statt des in der Tabelle genannten CC BY 4.0. Beim Goethepunkt wird die ebenfalls auf Commons angebotene Lizenz CC BY-SA 3.0 verwendet. Die DE-Versionen bei Stolzenfels und Concordiaturm sind berücksichtigt. Jede Bildlizenz gilt für das jeweilige Foto, nicht automatisch für alle Bestandteile der Zusammenstellung. Vollständige Links folgen unten.
+Es werden die in der Urhebertabelle genannten Originaldateien von Wikimedia Commons verwendet. Die API-Metadaten jedes Bildes wurden gespeichert und die Originaldateien heruntergeladen. Alle zehn Fotos erscheinen in gleich großen Querformatrahmen von 54,7 × 30 mm. Die Layoutansichten vergrößern die Fotos proportional und beschneiden überstehende Bereiche; dadurch entstehen keine Verzerrungen oder weißen Ränder. Die Ausschnitte sind zentriert, beim Malbergturm zugunsten der Turmkrone nach oben verschoben. Die Original-JPEGs bleiben unverändert. Kleine VRT-Dateien mit relativen Verweisen und eine ausgeblendete Foto-Layergruppe steuern ausschließlich die Layoutansichten; deren technische Pixelkoordinaten sind keine geografischen Bildstandorte. Die Änderung ist unter jedem Bild als „Ausschnitt“ gekennzeichnet. Die Lizenzangaben der Tabelle wurden mit Commons verglichen. Ruppertsklamm, Malbergturm, Emser Therme und Kloster Arnstein stehen dort unter CC BY-SA 4.0 statt des in der Tabelle genannten CC BY 4.0. Beim Goethepunkt wird die ebenfalls auf Commons angebotene Lizenz CC BY-SA 3.0 verwendet. Die DE-Versionen bei Stolzenfels und Concordiaturm sind berücksichtigt. Jede Bildlizenz gilt für das jeweilige Foto, nicht automatisch für alle Bestandteile der Zusammenstellung. Vollständige Links folgen unten.
 
 ## Validierung und Grenzen der Aussage
 
@@ -112,7 +112,7 @@ Urheber: Qwertzu111111
 Lizenz: CC BY-SA 4.0
 https://commons.wikimedia.org/wiki/File:Naturschutzgebiet_Ruppertsklamm_(2).jpg
 https://creativecommons.org/licenses/by-sa/4.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 02 · Schloss Stolzenfels 01 Koblenz 2015.jpg
 
@@ -120,7 +120,7 @@ Urheber: Holger Weinandt
 Lizenz: CC BY-SA 3.0 de
 https://commons.wikimedia.org/wiki/File:Schloss_Stolzenfels_01_Koblenz_2015.jpg
 https://creativecommons.org/licenses/by-sa/3.0/de/deed.en
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 03 · BadEmsEmserTherme2.jpg
 
@@ -128,7 +128,7 @@ Urheber: LigaDue
 Lizenz: CC BY-SA 4.0
 https://commons.wikimedia.org/wiki/File:BadEmsEmserTherme2.jpg
 https://creativecommons.org/licenses/by-sa/4.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 04 · Burcht Laurenburg te Laurenburg - Flickr - Frans Berkelaar.jpg
 
@@ -136,7 +136,7 @@ Urheber: Frans Berkelaar
 Lizenz: CC BY 4.0
 https://commons.wikimedia.org/wiki/File:Burcht_Laurenburg_te_Laurenburg_-_Flickr_-_Frans_Berkelaar.jpg
 https://creativecommons.org/licenses/by/4.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 05 · Nassau Luftbild 071.jpg
 
@@ -144,7 +144,7 @@ Urheber: Fritz Geller-Grimm
 Lizenz: CC BY-SA 3.0
 https://commons.wikimedia.org/wiki/File:Nassau_Luftbild_071.jpg
 https://creativecommons.org/licenses/by-sa/3.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 06 · Malbergturm.JPG
 
@@ -152,7 +152,7 @@ Urheber: Muck
 Lizenz: CC BY-SA 4.0
 https://commons.wikimedia.org/wiki/File:Malbergturm.JPG
 https://creativecommons.org/licenses/by-sa/4.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 07 · Concordia-Turm-Bad-Ems-JR-E-181-2010-05-23.jpg
 
@@ -160,7 +160,7 @@ Urheber: Johannes Robalotoff
 Lizenz: CC BY-SA 3.0 de
 https://commons.wikimedia.org/wiki/File:Concordia-Turm-Bad-Ems-JR-E-181-2010-05-23.jpg
 https://creativecommons.org/licenses/by-sa/3.0/de/deed.en
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 08 · Obernhof Goethepunkt Aussichtspanorama ks01.jpg
 
@@ -168,7 +168,7 @@ Urheber: Kreuzschnabel
 Lizenz: CC BY-SA 3.0
 https://commons.wikimedia.org/wiki/File:Obernhof_Goethepunkt_Aussichtspanorama_ks01.jpg
 https://creativecommons.org/licenses/by-sa/3.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 09 · Schloss Schaumburg in der Nähe von Limburg an der Lahn (8621867592).jpg
 
@@ -176,7 +176,7 @@ Urheber: Heribert Pohl --- Thanks for half  a million clicks! from Germering bei
 Lizenz: CC BY-SA 2.0
 https://commons.wikimedia.org/wiki/File:Schloss_Schaumburg_in_der_N%C3%A4he_von_Limburg_an_der_Lahn_(8621867592).jpg
 https://creativecommons.org/licenses/by-sa/2.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ### 10 · ObernhofKlosterArnstein1.jpg
 
@@ -184,7 +184,7 @@ Urheber: LigaDue
 Lizenz: CC BY-SA 4.0
 https://commons.wikimedia.org/wiki/File:ObernhofKlosterArnstein1.jpg
 https://creativecommons.org/licenses/by-sa/4.0
-Darstellung: verkleinert, vollständiges Bild, keine inhaltliche Änderung.
+Darstellung: proportional skalierter Bildausschnitt in einem einheitlichen Querformatrahmen (54,7 × 30 mm); Originaldatei unverändert.
 
 ## Ausgewählte direkte Zuflüsse
 

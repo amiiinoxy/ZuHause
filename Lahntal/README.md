@@ -31,4 +31,4 @@ Der zweite Befehl benötigt ReportLab. Der erste Befehl erzeugt `daten/Kartendat
 
 `skripte/internet_pruefen.py` ist eine optionale, rein lesende Dienstprüfung. Die bei Arbeitsbeginn bestehende Netzwerksperre wurde im Verlauf aufgehoben; sämtliche für das Ergebnis benötigten Daten und Fotos wurden anschließend erfolgreich abgerufen.
 
-Das ursprüngliche Git-Repository wurde nicht verändert.
+Die Bildleiste verwendet zehn gleich große Querformatrahmen (54,7 × 30 mm) mit proportionalen Bildausschnitten. Die Originalfotos bleiben unverändert. Die ausgeblendete Gruppe „Bildleiste – nur Layout, keine Georeferenzierung“ und die kleinen VRT-Dateien im Ordner `symbole` werden für die Fotoansichten benötigt; ihre Pixelkoordinaten geben keine geografischen Standorte an. Die vollständigen geografischen Fotostandorte liegen weiterhin im Kartenlayer Sehenswürdigkeiten.

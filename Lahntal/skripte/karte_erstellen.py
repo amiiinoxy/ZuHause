@@ -14,6 +14,7 @@ os.environ.setdefault('QT_QPA_PLATFORM', 'offscreen')
 from qgis.core import *
 from qgis.PyQt.QtCore import QVariant, QSizeF, QPointF
 from qgis.PyQt.QtGui import QColor, QFont, QPolygonF
+from fotoleiste import add_photo_panel
 
 B = Path(__file__).resolve().parents[1]
 app = QgsApplication([], False)
@@ -419,22 +420,19 @@ text(120,287,210,10,'1 : 65 000 · Fließpfeile zeigen stromabwärts',8.5)
 credits={r['nr']:r for r in json.loads((B/'recherche/Fotonachweise.json').read_text())}
 names={f['Nr']:f['Name'] for f in poi.getFeatures()}
 short_authors={9:'Heribert Pohl',6:'Muck (Muck50)'}
+photo_group=P.layerTreeRoot().addGroup('Bildleiste – nur Layout, keine Georeferenzierung')
+photo_group.setItemVisibilityChecked(False)
 for pos,n in enumerate([2,1,6,3,7,5,10,8,4,9]):
     x=10+pos*57.7
-    picture=QgsLayoutItemPicture(layout)
-    layout.addLayoutItem(picture)
-    picture.attemptMove(QgsLayoutPoint(x,307))
-    picture.attemptResize(QgsLayoutSize(54.7,30))
-    picture.setResizeMode(QgsLayoutItemPicture.Zoom)
-    picture.setPicturePath(str(B/'fotos'/f'{n:02d}.jpg'))
+    add_photo_panel(layout,P,B,photo_group,n,x,307)
     text(x,338,55,10,f'{n:02d} · {names[n]}',8.6,bold=True)
     author=short_authors.get(n,credits[n]['urheber'])
-    text(x,349,55,12,author+'\n'+credits[n]['lizenz'],7.2,color='#5e6968')
+    text(x,349,55,12,author+'\n'+credits[n]['lizenz']+' · Ausschnitt',7.2,color='#5e6968')
 
 shape_line(10,360,574,'#b5c1bd',0.25)
 text(10,364,570,10,'KARTENGRUNDLAGEN UND NACHWEISE',9,bold=True)
 text(10,376,285,26,'Gewässer: Wasserwirtschaftsverwaltung Rheinland-Pfalz, Gewässernetz 2017, CC BY 4.0.\nWald / ergänzende Straßen: © GeoBasis-DE / BKG (2026), DLM250, dl-de/by-2-0.\nKreisgrenzen: © BKG (2026), VG250, dl-de/by-2-0; Datenquellen siehe Begleitnachweis.\nOrtslagen, Landwirtschaft / Straßen: ©GeoBasis-DE / LVermGeoRP (2026), dl-de/by-2-0,\nwww.lvermgeo.rlp.de [Daten bearbeitet]; Wanderweg aus den Prüfungseingaben.',7.8)
-text(307,376,278,26,'Fotos: Wikimedia Commons; Nummern verknüpfen Fotostandorte und Bildleiste.\nUrheber und jeweilige Lizenz stehen unter den unverändert übernommenen Bildern.\nLizenztexte: creativecommons.org/licenses/ (BY 4.0; BY-SA 2.0, 3.0, 3.0 DE, 4.0).\nVollständige Bild-URLs, Lizenzlinks, Datenquellen und Auswahlmethodik:\nbeiliegende Datei Quellen_und_Methodik.pdf / QUELLEN_UND_METHODIK.md.',7.8)
+text(307,376,278,26,'Fotos: Wikimedia Commons; Nummern verknüpfen Fotostandorte und Bildleiste.\nBildausschnitte im einheitlichen Querformat; Urheber und Lizenz unter jedem Foto.\nLizenztexte: creativecommons.org/licenses/ (BY 4.0; BY-SA 2.0, 3.0, 3.0 DE, 4.0).\nVollständige Bild-URLs, Lizenzlinks, Datenquellen und Auswahlmethodik:\nbeiliegende Datei Quellen_und_Methodik.pdf / QUELLEN_UND_METHODIK.md.',7.8)
 text(10,407,570,9,f'Erstellt / Datenabruf: 27.10.2026  ·  Prüfungskennziffer: 204  ·  Rechner: {socket.gethostname()}  ·  ETRS89 / UTM Zone 32N (EPSG:25832)  ·  DIN A2 quer',8)
 P.layoutManager().addLayout(layout)
 P.setFileName(str(B/'Lahntal.qgz'))
