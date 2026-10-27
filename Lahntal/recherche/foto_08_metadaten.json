@@ -1,0 +1,105 @@
+{
+  "nr": 8,
+  "titel": "File:Obernhof Goethepunkt Aussichtspanorama ks01.jpg",
+  "quelle": "https://commons.wikimedia.org/wiki/File:Obernhof_Goethepunkt_Aussichtspanorama_ks01.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/6/68/Obernhof_Goethepunkt_Aussichtspanorama_ks01.jpg",
+  "urheber": "Kreuzschnabel",
+  "lizenz": "CC BY-SA 3.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "urheber_tabelle": "Kreuzschnabel",
+  "lizenz_tabelle": "https://artlibre.org/licence/lal/en/",
+  "datei": "fotos/08.jpg",
+  "metadaten": {
+    "DateTime": {
+      "value": "2022-09-11 18:00:10",
+      "source": "mediawiki-metadata",
+      "hidden": ""
+    },
+    "ObjectName": {
+      "value": "Obernhof Goethepunkt Aussichtspanorama ks01",
+      "source": "mediawiki-metadata"
+    },
+    "CommonsMetadataExtension": {
+      "value": 1.2,
+      "source": "extension",
+      "hidden": ""
+    },
+    "Categories": {
+      "value": "GFDL|FAL|Obernhof|License migration redundant|Self-published work|Files with coordinates missing SDC location of creation (50° N, 7° E)|Images by Kreuzschnabel/Landschaften",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "Assessments": {
+      "value": "",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "GPSLatitude": {
+      "value": "50.319710",
+      "source": "commons-desc-page"
+    },
+    "GPSLongitude": {
+      "value": "7.859420",
+      "source": "commons-desc-page"
+    },
+    "GPSMapDatum": {
+      "value": "WGS-84",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "ImageDescription": {
+      "value": "View panorama from \"Goethepunkt\" lookout point, Obernhof-on-Lahn, Germany",
+      "source": "commons-desc-page"
+    },
+    "DateTimeOriginal": {
+      "value": "2022-09-11",
+      "source": "commons-desc-page"
+    },
+    "Credit": {
+      "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+      "source": "commons-desc-page"
+    },
+    "Artist": {
+      "value": "<a href=\"//commons.wikimedia.org/wiki/User:Kreuzschnabel\" title=\"User:Kreuzschnabel\">Kreuzschnabel</a>",
+      "source": "commons-desc-page"
+    },
+    "Permission": {
+      "value": "I, the copyright holder of this work, hereby publish it under the following license:",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseShortName": {
+      "value": "CC BY-SA 3.0",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "UsageTerms": {
+      "value": "Creative Commons Attribution-Share Alike 3.0",
+      "source": "commons-desc-page"
+    },
+    "AttributionRequired": {
+      "value": "true",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseUrl": {
+      "value": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "commons-desc-page"
+    },
+    "Copyrighted": {
+      "value": "True",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "Restrictions": {
+      "value": "",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "License": {
+      "value": "cc-by-sa-3.0",
+      "source": "commons-templates",
+      "hidden": ""
+    }
+  }
+}

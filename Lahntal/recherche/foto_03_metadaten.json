@@ -1,0 +1,100 @@
+{
+  "nr": 3,
+  "titel": "File:BadEmsEmserTherme2.jpg",
+  "quelle": "https://commons.wikimedia.org/wiki/File:BadEmsEmserTherme2.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/0/00/BadEmsEmserTherme2.jpg",
+  "urheber": "LigaDue",
+  "lizenz": "CC BY-SA 4.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "urheber_tabelle": "LigaDue",
+  "lizenz_tabelle": "https://creativecommons.org/licenses/by/4.0/",
+  "datei": "fotos/03.jpg",
+  "metadaten": {
+    "DateTime": {
+      "value": "2026-01-30 21:30:21",
+      "source": "mediawiki-metadata",
+      "hidden": ""
+    },
+    "ObjectName": {
+      "value": "BadEmsEmserTherme2",
+      "source": "mediawiki-metadata"
+    },
+    "CommonsMetadataExtension": {
+      "value": 1.2,
+      "source": "extension",
+      "hidden": ""
+    },
+    "Categories": {
+      "value": "Emser Therme|Self-published work|Files with coordinates missing SDC location of creation (50° N, 7° E)|Photographs by LigaDue",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "Assessments": {
+      "value": "",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "GPSLatitude": {
+      "value": "50.332581",
+      "source": "commons-desc-page"
+    },
+    "GPSLongitude": {
+      "value": "7.713428",
+      "source": "commons-desc-page"
+    },
+    "GPSMapDatum": {
+      "value": "WGS-84",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "ImageDescription": {
+      "value": "Therme Bad Ems, Rhein-Lahn-Kries, Rheinland-Pfalz",
+      "source": "commons-desc-page"
+    },
+    "DateTimeOriginal": {
+      "value": "2026-01-19 15:22:50",
+      "source": "commons-desc-page"
+    },
+    "Credit": {
+      "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+      "source": "commons-desc-page"
+    },
+    "Artist": {
+      "value": "<a href=\"//commons.wikimedia.org/wiki/User:LigaDue\" title=\"User:LigaDue\">LigaDue</a>",
+      "source": "commons-desc-page"
+    },
+    "LicenseShortName": {
+      "value": "CC BY-SA 4.0",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "UsageTerms": {
+      "value": "Creative Commons Attribution-Share Alike 4.0",
+      "source": "commons-desc-page"
+    },
+    "AttributionRequired": {
+      "value": "true",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseUrl": {
+      "value": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "commons-desc-page"
+    },
+    "Copyrighted": {
+      "value": "True",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "Restrictions": {
+      "value": "",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "License": {
+      "value": "cc-by-sa-4.0",
+      "source": "commons-templates",
+      "hidden": ""
+    }
+  }
+}

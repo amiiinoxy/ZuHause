@@ -1,0 +1,100 @@
+{
+  "nr": 6,
+  "titel": "File:Malbergturm.JPG",
+  "quelle": "https://commons.wikimedia.org/wiki/File:Malbergturm.JPG",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/c/c7/Malbergturm.JPG",
+  "urheber": "Muck",
+  "lizenz": "CC BY-SA 4.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/4.0",
+  "urheber_tabelle": "Muck50",
+  "lizenz_tabelle": "https://creativecommons.org/licenses/by/4.0/",
+  "datei": "fotos/06.jpg",
+  "metadaten": {
+    "DateTime": {
+      "value": "2015-10-09 18:06:47",
+      "source": "mediawiki-metadata",
+      "hidden": ""
+    },
+    "ObjectName": {
+      "value": "Malbergturm",
+      "source": "mediawiki-metadata"
+    },
+    "CommonsMetadataExtension": {
+      "value": 1.2,
+      "source": "extension",
+      "hidden": ""
+    },
+    "Categories": {
+      "value": "Malbergturm|Self-published work|Files with coordinates missing SDC location of creation (50° N, 7° E)",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "Assessments": {
+      "value": "",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "GPSLatitude": {
+      "value": "50.326026",
+      "source": "commons-desc-page"
+    },
+    "GPSLongitude": {
+      "value": "7.715228",
+      "source": "commons-desc-page"
+    },
+    "GPSMapDatum": {
+      "value": "WGS-84",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "ImageDescription": {
+      "value": "Der Malbergturm auf dem Malbergskopf südlich von Bad Ems",
+      "source": "commons-desc-page"
+    },
+    "DateTimeOriginal": {
+      "value": "2015-10-03 13:39:40",
+      "source": "commons-desc-page"
+    },
+    "Credit": {
+      "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+      "source": "commons-desc-page"
+    },
+    "Artist": {
+      "value": "<a href=\"//commons.wikimedia.org/wiki/User:Muck50\" title=\"User:Muck50\">Muck</a>",
+      "source": "commons-desc-page"
+    },
+    "LicenseShortName": {
+      "value": "CC BY-SA 4.0",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "UsageTerms": {
+      "value": "Creative Commons Attribution-Share Alike 4.0",
+      "source": "commons-desc-page"
+    },
+    "AttributionRequired": {
+      "value": "true",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseUrl": {
+      "value": "https://creativecommons.org/licenses/by-sa/4.0",
+      "source": "commons-desc-page"
+    },
+    "Copyrighted": {
+      "value": "True",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "Restrictions": {
+      "value": "",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "License": {
+      "value": "cc-by-sa-4.0",
+      "source": "commons-templates",
+      "hidden": ""
+    }
+  }
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "quelle": "dlm250",
+    "url": "https://sgx.geodatenzentrum.de/wfs_dlm250?SERVICE=WFS&REQUEST=GetCapabilities&VERSION=2.0.0",
+    "zeitpunkt_utc": "2026-10-27T12:43:29.700892+00:00",
+    "status": 200,
+    "bytes": 186124,
+    "content_type": "application/xml"
+  },
+  {
+    "quelle": "dlm50",
+    "url": "https://www.geoportal.rlp.de/registry/wfs/606?SERVICE=WFS&REQUEST=GetCapabilities&VERSION=2.0.0",
+    "zeitpunkt_utc": "2026-10-27T12:43:29.701722+00:00",
+    "status": 200,
+    "bytes": 119578,
+    "content_type": "application/xml"
+  },
+  {
+    "quelle": "gewaesser",
+    "url": "https://geodienste-wasser.rlp-umwelt.de/geoserver/gewaesser/wfs?SERVICE=WFS&REQUEST=GetCapabilities&VERSION=2.0.0",
+    "zeitpunkt_utc": "2026-10-27T12:43:29.702249+00:00",
+    "status": 200,
+    "bytes": 98290,
+    "content_type": "application/xml"
+  },
+  {
+    "quelle": "verwaltungsgrenzen_kandidat",
+    "url": "https://sgx.geodatenzentrum.de/wfs_vg250?SERVICE=WFS&REQUEST=GetCapabilities&VERSION=2.0.0",
+    "zeitpunkt_utc": "2026-10-27T12:43:29.703189+00:00",
+    "status": 200,
+    "bytes": 108706,
+    "content_type": "application/xml"
+  },
+  {
+    "quelle": "fotoinformation",
+    "url": "https://commons.wikimedia.org/w/api.php?action=query&format=json&titles=File:Malbergturm.JPG&prop=imageinfo&iiprop=url%7Cextmetadata",
+    "zeitpunkt_utc": "2026-10-27T12:43:29.703865+00:00",
+    "status": 200,
+    "bytes": 2179,
+    "content_type": "application/json; charset=utf-8"
+  }
+]

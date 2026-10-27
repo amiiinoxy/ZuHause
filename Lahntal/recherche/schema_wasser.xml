@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:gewaesser="http://geodienste-wasser.rlp-umwelt.de/gewaesser" xmlns:gml="http://www.opengis.net/gml/3.2" xmlns:wfs="http://www.opengis.net/wfs/2.0" xmlns:xsd="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://geodienste-wasser.rlp-umwelt.de/gewaesser">
+  <xsd:import namespace="http://www.opengis.net/gml/3.2" schemaLocation="https://geodienste-wasser.rlp-umwelt.de/geoserver/schemas/gml/3.2.1/gml.xsd"/>
+  <xsd:complexType name="VW_F_GEWAESSERType">
+    <xsd:complexContent>
+      <xsd:extension base="gml:AbstractFeatureType">
+        <xsd:sequence>
+          <xsd:element maxOccurs="1" minOccurs="1" name="GEWAESSER" nillable="false" type="xsd:decimal"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="GEWAESSERNAME" nillable="false" type="xsd:string"/>
+          <xsd:element maxOccurs="1" minOccurs="1" name="LAENGE" nillable="false" type="xsd:decimal"/>
+          <xsd:element maxOccurs="1" minOccurs="0" name="GEOMETRIE" nillable="true" type="gml:GeometryPropertyType"/>
+        </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+  <xsd:element name="VW_F_GEWAESSER" substitutionGroup="gml:AbstractFeature" type="gewaesser:VW_F_GEWAESSERType"/>
+</xsd:schema>

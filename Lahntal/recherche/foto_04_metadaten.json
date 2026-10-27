@@ -1,0 +1,100 @@
+{
+  "nr": 4,
+  "titel": "File:Burcht Laurenburg te Laurenburg - Flickr - Frans Berkelaar.jpg",
+  "quelle": "https://commons.wikimedia.org/wiki/File:Burcht_Laurenburg_te_Laurenburg_-_Flickr_-_Frans_Berkelaar.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Burcht_Laurenburg_te_Laurenburg_-_Flickr_-_Frans_Berkelaar.jpg",
+  "urheber": "Frans Berkelaar",
+  "lizenz": "CC BY 4.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by/4.0",
+  "urheber_tabelle": "Frans Berkelaar",
+  "lizenz_tabelle": "https://creativecommons.org/licenses/by/4.0/",
+  "datei": "fotos/04.jpg",
+  "metadaten": {
+    "DateTime": {
+      "value": "2025-09-23 09:29:26",
+      "source": "mediawiki-metadata",
+      "hidden": ""
+    },
+    "ObjectName": {
+      "value": "Burcht Laurenburg te Laurenburg - Flickr - Frans Berkelaar",
+      "source": "mediawiki-metadata"
+    },
+    "CommonsMetadataExtension": {
+      "value": 1.2,
+      "source": "extension",
+      "hidden": ""
+    },
+    "Categories": {
+      "value": "Burg Laurenburg|Flickr images reviewed by FlickreviewR 2|Flickr files uploaded by Red panda bot|Photos in Flickr Explore|Files with coordinates missing SDC location of creation (50° N, 7° E)|Germany photographs taken on 2025-09-05|Photographs by Frans Berkelaar",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "Assessments": {
+      "value": "",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "GPSLatitude": {
+      "value": "50.331671",
+      "source": "commons-desc-page"
+    },
+    "GPSLongitude": {
+      "value": "7.904629",
+      "source": "commons-desc-page"
+    },
+    "GPSMapDatum": {
+      "value": "WGS-84",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "ImageDescription": {
+      "value": "Zie tevens: <a class=\"external text\" href=\"https://nl.m.wikipedia.org/wiki/Burcht_Laurenburg\">nl.m.wikipedia.org/wiki/Burcht_Laurenburg</a>",
+      "source": "commons-desc-page"
+    },
+    "DateTimeOriginal": {
+      "value": "Taken on 5 September 2025, 07:49",
+      "source": "commons-desc-page"
+    },
+    "Credit": {
+      "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/photos/28169156@N03/54794221260/\">Burcht Laurenburg te Laurenburg</a>",
+      "source": "commons-desc-page"
+    },
+    "Artist": {
+      "value": "<a rel=\"nofollow\" class=\"external text\" href=\"https://www.flickr.com/people/28169156@N03\">Frans Berkelaar</a>",
+      "source": "commons-desc-page"
+    },
+    "LicenseShortName": {
+      "value": "CC BY 4.0",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "UsageTerms": {
+      "value": "Creative Commons Attribution 4.0",
+      "source": "commons-desc-page"
+    },
+    "AttributionRequired": {
+      "value": "true",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseUrl": {
+      "value": "https://creativecommons.org/licenses/by/4.0",
+      "source": "commons-desc-page"
+    },
+    "Copyrighted": {
+      "value": "True",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "Restrictions": {
+      "value": "",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "License": {
+      "value": "cc-by-4.0",
+      "source": "commons-templates",
+      "hidden": ""
+    }
+  }
+}

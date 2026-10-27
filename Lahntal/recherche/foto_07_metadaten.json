@@ -1,0 +1,100 @@
+{
+  "nr": 7,
+  "titel": "File:Concordia-Turm-Bad-Ems-JR-E-181-2010-05-23.jpg",
+  "quelle": "https://commons.wikimedia.org/wiki/File:Concordia-Turm-Bad-Ems-JR-E-181-2010-05-23.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/a/ae/Concordia-Turm-Bad-Ems-JR-E-181-2010-05-23.jpg",
+  "urheber": "Johannes Robalotoff",
+  "lizenz": "CC BY-SA 3.0 de",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "urheber_tabelle": "Johannes Robalotoff",
+  "lizenz_tabelle": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "datei": "fotos/07.jpg",
+  "metadaten": {
+    "DateTime": {
+      "value": "2022-12-29 21:04:22",
+      "source": "mediawiki-metadata",
+      "hidden": ""
+    },
+    "ObjectName": {
+      "value": "Concordia-Turm-Bad-Ems-JR-E-181-2010-05-23",
+      "source": "mediawiki-metadata"
+    },
+    "CommonsMetadataExtension": {
+      "value": 1.2,
+      "source": "extension",
+      "hidden": ""
+    },
+    "Categories": {
+      "value": "Concordiaturm|Files with coordinates missing SDC location of creation (50° N, 7° E)",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "Assessments": {
+      "value": "",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "GPSLatitude": {
+      "value": "50.327250",
+      "source": "commons-desc-page"
+    },
+    "GPSLongitude": {
+      "value": "7.735850",
+      "source": "commons-desc-page"
+    },
+    "GPSMapDatum": {
+      "value": "WGS-84",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "ImageDescription": {
+      "value": "The Concordia tower near Bad Ems, Germany, built in 1861, with the nearby restaurant.",
+      "source": "commons-desc-page"
+    },
+    "DateTimeOriginal": {
+      "value": "2010-05-23",
+      "source": "commons-desc-page"
+    },
+    "Credit": {
+      "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+      "source": "commons-desc-page"
+    },
+    "Artist": {
+      "value": "<a href=\"//commons.wikimedia.org/wiki/User:Johannes_Robalotoff\" title=\"User:Johannes Robalotoff\">Johannes Robalotoff</a>",
+      "source": "commons-desc-page"
+    },
+    "LicenseShortName": {
+      "value": "CC BY-SA 3.0 de",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "UsageTerms": {
+      "value": "Creative Commons Attribution-Share Alike 3.0 de",
+      "source": "commons-desc-page"
+    },
+    "AttributionRequired": {
+      "value": "true",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseUrl": {
+      "value": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "source": "commons-desc-page"
+    },
+    "Copyrighted": {
+      "value": "True",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "Restrictions": {
+      "value": "",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "License": {
+      "value": "cc-by-sa-3.0-de",
+      "source": "commons-templates",
+      "hidden": ""
+    }
+  }
+}

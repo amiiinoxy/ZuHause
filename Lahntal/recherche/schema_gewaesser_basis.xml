@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding="UTF-8" ?>
+<schema
+   targetNamespace="https://www.vermkv.rlp.de" 
+   xmlns:vermkv="https://www.vermkv.rlp.de" 
+   xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+   xmlns="http://www.w3.org/2001/XMLSchema"
+   xmlns:gml="http://www.opengis.net/gml/3.2"
+   elementFormDefault="qualified" version="0.1" >
+
+  <import namespace="http://www.opengis.net/gml/3.2"
+          schemaLocation="http://schemas.opengis.net/gml/3.2.1/gml.xsd" />
+
+  <element name="Gewaesser_GEW01_L" 
+           type="vermkv:Gewaesser_GEW01_LType" 
+           substitutionGroup="gml:AbstractFeature" />
+
+  <complexType name="Gewaesser_GEW01_LType">
+    <complexContent>
+      <extension base="gml:AbstractFeatureType">
+        <sequence>
+          <element name="msGeometry" type="gml:GeometryPropertyType" minOccurs="0" maxOccurs="1"/>
+          <element name="gid" minOccurs="0" type="integer"/>
+          <element name="land" minOccurs="0" type="string"/>
+          <element name="modellart" minOccurs="0" type="string"/>
+          <element name="objart" minOccurs="0" type="string"/>
+          <element name="objart_txt" minOccurs="0" type="string"/>
+          <element name="objid" minOccurs="0" type="string"/>
+          <element name="hdu_x" minOccurs="0" type="integer"/>
+          <element name="beginn" minOccurs="0" type="string"/>
+          <element name="ende" minOccurs="0" type="string"/>
+          <element name="objart_z" minOccurs="0" type="string"/>
+          <element name="objid_z" minOccurs="0" type="string"/>
+          <element name="brg" minOccurs="0" type="integer"/>
+          <element name="fkt" minOccurs="0" type="string"/>
+          <element name="flr" minOccurs="0" type="integer"/>
+          <element name="gwk" minOccurs="0" type="string"/>
+          <element name="hyd" minOccurs="0" type="string"/>
+          <element name="idn" minOccurs="0" type="string"/>
+          <element name="nam" minOccurs="0" type="string"/>
+          <element name="sfk" minOccurs="0" type="string"/>
+          <element name="wdm" minOccurs="0" type="string"/>
+          <element name="znm" minOccurs="0" type="string"/>
+          <element name="zus" minOccurs="0" type="string"/>
+          <element name="fdv_x" minOccurs="0" type="integer"/>
+          <element name="fdv_z_x" minOccurs="0" type="integer"/>
+        </sequence>
+      </extension>
+    </complexContent>
+  </complexType>
+
+</schema>

@@ -1,0 +1,11 @@
+Name|X|Y
+Ruppertsklamm|402529|5574962
+Schloss Stolzenfels|399737|5573277
+Emser Therme|408428|5576390
+Laurenburg|422053|5576084
+Burg Nassau|414021|5573883
+Malbergturm|408554|5575678
+Concordiaturm|410027|5575781
+Goethepunkt|418804|5574800
+Schloss Schaumburg|427229|5576853
+Kloster Arnstein|418199|5573684

@@ -1,0 +1,100 @@
+{
+  "nr": 2,
+  "titel": "File:Schloss Stolzenfels 01 Koblenz 2015.jpg",
+  "quelle": "https://commons.wikimedia.org/wiki/File:Schloss_Stolzenfels_01_Koblenz_2015.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Schloss_Stolzenfels_01_Koblenz_2015.jpg",
+  "urheber": "Holger Weinandt",
+  "lizenz": "CC BY-SA 3.0 de",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "urheber_tabelle": "Holger Weinandt",
+  "lizenz_tabelle": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "datei": "fotos/02.jpg",
+  "metadaten": {
+    "DateTime": {
+      "value": "2020-11-19 16:21:35",
+      "source": "mediawiki-metadata",
+      "hidden": ""
+    },
+    "ObjectName": {
+      "value": "Schloss Stolzenfels 01 Koblenz 2015",
+      "source": "mediawiki-metadata"
+    },
+    "CommonsMetadataExtension": {
+      "value": 1.2,
+      "source": "extension",
+      "hidden": ""
+    },
+    "Categories": {
+      "value": "Taken with Canon EOS 70D|Schloss Stolzenfels|Self-published work|Files by Holger Weinandt|2015 in Koblenz|Photographs taken on 2015-05-06|Files with coordinates missing SDC location of creation (50° N, 7° E)",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "Assessments": {
+      "value": "",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "GPSLatitude": {
+      "value": "50.305111",
+      "source": "commons-desc-page"
+    },
+    "GPSLongitude": {
+      "value": "7.611389",
+      "source": "commons-desc-page"
+    },
+    "GPSMapDatum": {
+      "value": "WGS-84",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "ImageDescription": {
+      "value": "<a href=\"https://en.wikipedia.org/wiki/Stolzenfels_Castle\" class=\"extiw\" title=\"en:Stolzenfels Castle\">Stolzenfels Castle</a> in <a href=\"https://en.wikipedia.org/wiki/Koblenz\" class=\"extiw\" title=\"en:Koblenz\">Koblenz</a>",
+      "source": "commons-desc-page"
+    },
+    "DateTimeOriginal": {
+      "value": "2015-05-06",
+      "source": "commons-desc-page"
+    },
+    "Credit": {
+      "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+      "source": "commons-desc-page"
+    },
+    "Artist": {
+      "value": "<a href=\"https://de.wikipedia.org/wiki/Benutzer:Schaengel\" class=\"extiw\" title=\"de:Benutzer:Schaengel\">Holger Weinandt</a>",
+      "source": "commons-desc-page"
+    },
+    "LicenseShortName": {
+      "value": "CC BY-SA 3.0 de",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "UsageTerms": {
+      "value": "Creative Commons Attribution-Share Alike 3.0 de",
+      "source": "commons-desc-page"
+    },
+    "AttributionRequired": {
+      "value": "true",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseUrl": {
+      "value": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+      "source": "commons-desc-page"
+    },
+    "Copyrighted": {
+      "value": "True",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "Restrictions": {
+      "value": "",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "License": {
+      "value": "cc-by-sa-3.0-de",
+      "source": "commons-templates",
+      "hidden": ""
+    }
+  }
+}

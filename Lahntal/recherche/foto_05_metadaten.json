@@ -1,0 +1,92 @@
+{
+  "nr": 5,
+  "titel": "File:Nassau Luftbild 071.jpg",
+  "quelle": "https://commons.wikimedia.org/wiki/File:Nassau_Luftbild_071.jpg",
+  "original": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Nassau_Luftbild_071.jpg",
+  "urheber": "Fritz Geller-Grimm",
+  "lizenz": "CC BY-SA 3.0",
+  "lizenz_url": "https://creativecommons.org/licenses/by-sa/3.0",
+  "urheber_tabelle": "Fritz Geller-Grimm",
+  "lizenz_tabelle": "https://creativecommons.org/licenses/by-sa/3.0/",
+  "datei": "fotos/05.jpg",
+  "metadaten": {
+    "DateTime": {
+      "value": "2008-01-06 17:36:04",
+      "source": "mediawiki-metadata",
+      "hidden": ""
+    },
+    "ObjectName": {
+      "value": "Nassau Luftbild 071",
+      "source": "mediawiki-metadata"
+    },
+    "CommonsMetadataExtension": {
+      "value": 1.2,
+      "source": "extension",
+      "hidden": ""
+    },
+    "Categories": {
+      "value": "Aerial photographs of castles in Germany|Burg Nassau|Self-published work|Aerial photographs of Rhein-Lahn-Kreis",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "Assessments": {
+      "value": "",
+      "source": "commons-categories",
+      "hidden": ""
+    },
+    "ImageDescription": {
+      "value": "Aerial photograph of Nassau, Rhineland-Palatinate, Germany",
+      "source": "commons-desc-page"
+    },
+    "DateTimeOriginal": {
+      "value": "2007-06-05",
+      "source": "commons-desc-page"
+    },
+    "Credit": {
+      "value": "<span class=\"int-own-work\" lang=\"en\">Own work</span>",
+      "source": "commons-desc-page"
+    },
+    "Artist": {
+      "value": "<a href=\"//commons.wikimedia.org/wiki/User:Dysmachus\" title=\"User:Dysmachus\">Fritz Geller-Grimm</a>",
+      "source": "commons-desc-page"
+    },
+    "Permission": {
+      "value": "I, the copyright holder of this work, hereby publish it under the following license:",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseShortName": {
+      "value": "CC BY-SA 3.0",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "UsageTerms": {
+      "value": "Creative Commons Attribution-Share Alike 3.0",
+      "source": "commons-desc-page"
+    },
+    "AttributionRequired": {
+      "value": "true",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "LicenseUrl": {
+      "value": "https://creativecommons.org/licenses/by-sa/3.0",
+      "source": "commons-desc-page"
+    },
+    "Copyrighted": {
+      "value": "True",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "Restrictions": {
+      "value": "",
+      "source": "commons-desc-page",
+      "hidden": ""
+    },
+    "License": {
+      "value": "cc-by-sa-3.0",
+      "source": "commons-templates",
+      "hidden": ""
+    }
+  }
+}

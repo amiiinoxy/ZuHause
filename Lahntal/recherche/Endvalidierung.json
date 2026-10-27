@@ -1,0 +1,302 @@
+{
+  "gewaesser": 63,
+  "fliessrichtung": 127,
+  "ortslagen": 150,
+  "ortslagen_hervorgehoben": 96,
+  "wald": 61,
+  "landwirtschaft": 6118,
+  "kreise": 4,
+  "strassen": 3360,
+  "strassennummern": 24,
+  "lahnwanderweg": 1,
+  "fotostandorte": 10,
+  "direkte_zufluesse": 40,
+  "zufluesse": {
+    "2587940000": {
+      "name": "Hambach",
+      "laenge_m": 6403.41,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2588000000": {
+      "name": "Aar",
+      "laenge_m": 22630.53,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589111200": {
+      "name": "Langenbach",
+      "laenge_m": 3059.32,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589134000": {
+      "name": "Kiesbach",
+      "laenge_m": 3051.58,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589139600": {
+      "name": "Hellbach",
+      "laenge_m": 1856.39,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589140000": {
+      "name": "Rupbach",
+      "laenge_m": 6884.67,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589160000": {
+      "name": "Waselbach",
+      "laenge_m": 4143.48,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589174000": {
+      "name": "Hurbach",
+      "laenge_m": 1443.14,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589176000": {
+      "name": "Häuserhofbach",
+      "laenge_m": 1228.42,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589178000": {
+      "name": "Bach am Vierseenblick",
+      "laenge_m": 1268.82,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589194000": {
+      "name": "Schleusenbach",
+      "laenge_m": 1185.03,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589200000": {
+      "name": "Dörsbach",
+      "laenge_m": 25686.04,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589400000": {
+      "name": "Gelbach",
+      "laenge_m": 39780.14,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589532000": {
+      "name": "Salscheider Bach",
+      "laenge_m": 1419.3600000000001,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589540000": {
+      "name": "Kallbach",
+      "laenge_m": 5374.35,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589600000": {
+      "name": "Mühlbach",
+      "laenge_m": 33454.619999999995,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589712000": {
+      "name": "Neuzenbach",
+      "laenge_m": 1823.27,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589719940": {
+      "name": "Misselberger Bach",
+      "laenge_m": 1042.43,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589720000": {
+      "name": "Unterbach",
+      "laenge_m": 5352.06,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589760000": {
+      "name": "Wiesbach",
+      "laenge_m": 2005.4499999999998,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589780000": {
+      "name": "Braunebach",
+      "laenge_m": 3543.04,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589800000": {
+      "name": "Emsbach",
+      "laenge_m": 11420.79,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589920000": {
+      "name": "Fachbach",
+      "laenge_m": 4158.43,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589960000": {
+      "name": "Erzbach",
+      "laenge_m": 3426.09,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589971200": {
+      "name": "Bach in den Süßgrund",
+      "laenge_m": 1419.38,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589972000": {
+      "name": "Ruppertsklamm",
+      "laenge_m": 2032.95,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2587960000": {
+      "name": "Heistenbach",
+      "laenge_m": 4750.35,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589112000": {
+      "name": "Reiserbach",
+      "laenge_m": 2022.75,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589114000": {
+      "name": "Daubach",
+      "laenge_m": 4808.12,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589120000": {
+      "name": "Schaumburgerbach",
+      "laenge_m": 3259.34,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589132000": {
+      "name": "Schroarbach",
+      "laenge_m": 2662.36,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589139120": {
+      "name": "Säuferbach",
+      "laenge_m": 1033.96,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589152000": {
+      "name": "Bach von Gutenacker",
+      "laenge_m": 1150.39,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589732000": {
+      "name": "Odenbach",
+      "laenge_m": 1162.28,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589739200": {
+      "name": "Mohrendell",
+      "laenge_m": 1138.56,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589740000": {
+      "name": "Rullsbach",
+      "laenge_m": 1448.94,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589792000": {
+      "name": "Westersbach",
+      "laenge_m": 1586.47,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589914000": {
+      "name": "Fröschbach",
+      "laenge_m": 1472.09,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589936000": {
+      "name": "Eschgraben",
+      "laenge_m": 1208.07,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    },
+    "2589940000": {
+      "name": "Schweizertalbach",
+      "laenge_m": 3064.59,
+      "muen_distanzen_m": [
+        0.0
+      ]
+    }
+  },
+  "massstab": 64999.99999999999,
+  "wanderweg_laenge_km": 63.23572075781586,
+  "strassen_quellen": {
+    "strassen_basisdlm": 3316,
+    "strassen": 44
+  }
+}
