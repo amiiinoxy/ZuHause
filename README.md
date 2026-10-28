@@ -2,9 +2,9 @@
 
 Interaktive Karte für faire Arbeitswege zwischen Koblenz und Cochem.
 
-**Website:** https://amiiinoxy.github.io/Mein-Projekt/
+**Website:** https://amiiinoxy.github.io/ZuHause/
 
-GitHub Pages veröffentlicht den Branch `wohnortvergleich` aus dem Ordner `/(root)`. Für die kostenlose GitHub-Adresse bleibt **Custom domain leer**; es wird keine CNAME-Datei benötigt. Die eigene Domain-Zuordnung wurde entfernt und die Veröffentlichung am 27.10.2026 von GitHub erfolgreich abgeschlossen.
+GitHub Pages veröffentlicht den Branch `wohnortvergleich` aus dem Ordner `/(root)`. Für die kostenlose GitHub-Adresse bleibt **Custom domain leer**; es wird keine CNAME-Datei benötigt. Nach der Umbenennung des Repositorys zu `ZuHause` wurde die Karte am 28.10.2026 aus diesem Branch erfolgreich veröffentlicht. Der Branch `abgabe-lahntal-2026` enthält die separate Prüfungsabgabe und ist nicht die Quelle dieser Wohnortkarte.
 
 ![Vorschau der interaktiven Wohnortkarte](Wohnen/vorschau.png)
 
