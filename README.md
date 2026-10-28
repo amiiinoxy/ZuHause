@@ -4,7 +4,7 @@ Interaktive Karte für faire Arbeitswege zwischen Koblenz und Cochem.
 
 **Website:** https://amiiinoxy.github.io/ZuHause/
 
-**X-O-Spiel gegen den Computer:** https://amiiinoxy.github.io/ZuHause/XO/ – drei Schwierigkeitsstufen, freie Symbolwahl und getrennte lokale Spielstatistiken. Die eigenständige Seite `XO/index.html` benötigt weder einen Serverdienst noch externe Ressourcen.
+**X-O-Spiel gegen den Computer:** https://amiiinoxy.github.io/ZuHause/XO/ – gegen den Computer mit drei Schwierigkeitsstufen oder zu zweit per Einladungslink. Im Modus „Mit Freund“ werden Spielzüge, Spielstand und beidseitig bestätigte Revancherunden live synchronisiert. GitHub Pages liefert die statischen Dateien unter `XO/`; zum Aufbau der Browserverbindung nutzt der Freundesmodus den kostenlosen PeerJS-Dienst. Details und Grenzen: [XO/README.md](XO/README.md).
 
 **Lahntal-Kartenprojekt:** https://amiiinoxy.github.io/ZuHause/Lahntal/ – eigene Unterseite mit Kartenvorschau, Druck-PDF, Quellen und ZIP-Download der Prüfungsabgabe. Die Dateien unter `Lahntal/` stammen aus der Abgabe `a656c4b`; das vollständige QGIS-Paket bleibt auf `abgabe-lahntal-2026`. Beide Websites werden über `wohnortvergleich` veröffentlicht.
 
