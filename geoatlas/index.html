@@ -121,7 +121,7 @@ $('pointdata').replaceChildren(...records.map(([k,v])=>{let box=document.createE
 function setView(v){mode=v;document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===v));draw()}
 function setZoom(v){zoom=Math.max(.7,Math.min(7,v));draw()}
 document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));
-document.querySelectorAll('[data-place]').forEach(b=>b.onclick=()=>{let targets={germany:[9,51,2.5],norway:[10,62,1.9],svalbard:[18,78,2.2],world:[0,15,1]};[...center,zoom]=targets[b.dataset.place];draw()});
+document.querySelectorAll('[data-place]').forEach(b=>b.onclick=()=>{let targets={germany:[9,51,2.5],norway:[10,62,1.9],svalbard:[18,78,2.2],world:[0,15,1]};[center[0],center[1],zoom]=targets[b.dataset.place];draw()});
 $('reset').onclick=()=>{center=[9,28];zoom=1;setView('globe')};
 $('plus').onclick=()=>setZoom(zoom*1.2);$('minus').onclick=()=>setZoom(zoom/1.2);$('zoom').oninput=e=>setZoom(+e.target.value/100);
 $('mark').onclick=()=>updatePoint(true);
