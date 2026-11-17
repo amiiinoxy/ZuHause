@@ -148,4 +148,51 @@ Promise.all([fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json').
 updatePoint();draw();
 })();
 </script>
+
+<script>
+/* Dependency-free emergency renderer: protects the atlas when CDN libraries are unavailable. */
+window.addEventListener('load',function(){
+ if(typeof window.d3!=='undefined' && typeof window.topojson!=='undefined')return;
+ const c=document.getElementById('map');if(!c)return;
+ const ctx=c.getContext('2d'),$=id=>document.getElementById(id),R=Math.PI/180;
+ const continents=[
+ [[-168,70],[-141,60],[-131,54],[-124,46],[-116,32],[-107,30],[-97,16],[-85,10],[-80,26],[-66,46],[-53,55],[-82,64],[-112,72],[-145,72]],
+ [[-82,12],[-72,9],[-63,10],[-49,1],[-35,-7],[-40,-23],[-54,-39],[-71,-55],[-77,-36],[-81,-9]],
+ [[-11,36],[-17,21],[-17,12],[-8,5],[11,-5],[15,-17],[22,-34],[33,-35],[41,-12],[51,11],[43,13],[34,31],[10,37]],
+ [[-11,36],[-9,44],[-1,49],[10,55],[24,71],[40,70],[60,60],[87,55],[112,57],[130,50],[145,45],[150,59],[175,64],[180,50],[160,35],[144,32],[128,19],[117,4],[105,-5],[97,4],[80,7],[70,24],[60,26],[44,12],[34,31],[26,39],[12,42]],
+ [[112,-11],[132,-12],[153,-26],[146,-39],[115,-35],[112,-11]],
+ [[-52,60],[-41,60],[-40,83],[-57,83],[-52,60]]
+ ];
+ let lon=9,lat=28,zoom=1,view='globe',pointer=null,dragging=false;
+ function project(lo,la,w,h,rad){if(view!=='globe')return [w/2+(((lo-lon+540)%360)-180)*rad/90,h/2-(la-lat)*rad/90,1];let a=la*R,b=(((lo-lon+540)%360)-180)*R,t=lat*R;let x=Math.cos(a)*Math.sin(b),y=Math.sin(a)*Math.cos(t)-Math.cos(a)*Math.cos(b)*Math.sin(t),v=Math.sin(a)*Math.sin(t)+Math.cos(a)*Math.cos(b)*Math.cos(t);return [w/2+rad*x,h/2-rad*y,v]}
+ function line(points,stroke,width,w,h,rad){ctx.beginPath();let prev=null;for(const pt of points){let p=project(pt[0],pt[1],w,h,rad);if(p[2]<0||prev&&Math.hypot(p[0]-prev[0],p[1]-prev[1])>rad*.3){prev=null;continue}if(!prev)ctx.moveTo(p[0],p[1]);else ctx.lineTo(p[0],p[1]);prev=p}ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.stroke()}
+ function mer(x,a=-90,b=90){let p=[];for(let v=a;v<=b;v+=1)p.push([x,v]);return p}
+ function para(y,a=-180,b=180){let p=[];for(let x=a;x<=b;x+=1)p.push([x,y]);return p}
+ function draw(){
+ let w=c.clientWidth,h=c.clientHeight,d=Math.min(2,devicePixelRatio||1),rad=Math.min(w*.44,h*.45)*zoom;c.width=Math.round(w*d);c.height=Math.round(h*d);ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,w,h);ctx.fillStyle='#071b2d';ctx.fillRect(0,0,w,h);
+ if(view==='globe'){let g=ctx.createRadialGradient(w/2-rad*.3,h/2-rad*.4,10,w/2,h/2,rad);g.addColorStop(0,'#348baf');g.addColorStop(1,'#09304e');ctx.beginPath();ctx.arc(w/2,h/2,rad,0,Math.PI*2);ctx.fillStyle=g;ctx.fill();ctx.save();ctx.clip()}else{ctx.fillStyle='#154562';ctx.fillRect(0,0,w,h)}
+ if($('land')?.checked!==false){for(const land of continents){ctx.beginPath();let prev=null;for(const q of land){let p=project(q[0],q[1],w,h,rad);if(p[2]<0){prev=null;continue}if(!prev)ctx.moveTo(p[0],p[1]);else ctx.lineTo(p[0],p[1]);prev=p}ctx.fillStyle='#79b292';ctx.fill();ctx.strokeStyle='#b9ddbf';ctx.lineWidth=1;ctx.stroke()}}
+ if($('grid')?.checked){let ls=Number($('latstep')?.value)||10,os=Number($('lonstep')?.value)||10;for(let x=-180;x<180;x+=os)line(mer(x),'#cde7ed77',.6,w,h,rad);for(let y=-90;y<=90;y+=ls)line(para(y),'#cde7ed77',.6,w,h,rad)}
+ if($('utm')?.checked){if($('uzones')?.checked)for(let x=-180;x<=180;x+=6)line(mer(x,-80,84),'#ffcb66a0',1,w,h,rad);if($('ubands')?.checked)for(let y=-80;y<=84;y+=8)line(para(y),'#ffcb6688',.8,w,h,rad);
+ let z=Number($('zone')?.value)||32,m=-183+z*6;line(mer(m,-80,84),'#ffdf80',2.8,w,h,rad)}
+ if($('gk')?.checked){let ids=$('allgk')?.checked?[2,3,4,5]:[Number($('gzone')?.value)||3];for(let id of ids)line(mer(id*3,45,57),'#ff7cae',2.4,w,h,rad)}
+ if(view==='globe')ctx.restore();
+ if(view==='globe'){ctx.beginPath();ctx.arc(w/2,h/2,rad,0,Math.PI*2);ctx.strokeStyle='#b0e5f1';ctx.stroke()}
+ $('orientation').textContent='Fallback-Globus · '+Math.round(lon)+'° / '+Math.round(lat)+'°';
+ $('zoomlabel').textContent=Math.round(zoom*100)+' %';
+ }
+ function zoomTo(n){zoom=Math.max(.7,Math.min(7,n));$('zoom').value=Math.round(zoom*100);draw()}
+ c.addEventListener('wheel',e=>{e.preventDefault();zoomTo(zoom*(e.deltaY<0?1.15:1/1.15))},{passive:false});
+ c.addEventListener('pointerdown',e=>{pointer=[e.clientX,e.clientY];dragging=false;c.setPointerCapture(e.pointerId)});
+ c.addEventListener('pointermove',e=>{if(!pointer)return;let dx=e.clientX-pointer[0],dy=e.clientY-pointer[1];if(Math.abs(dx)+Math.abs(dy)>2)dragging=true;lon=((lon-dx*.3/zoom+540)%360)-180;lat=Math.max(-89,Math.min(89,lat+dy*.3/zoom));pointer=[e.clientX,e.clientY];draw()});
+ c.addEventListener('pointerup',()=>pointer=null);
+ document.querySelectorAll('[data-view]').forEach(b=>b.addEventListener('click',()=>{view=b.dataset.view==='globe'?'globe':'world';draw()}));
+ document.querySelectorAll('[data-place]').forEach(b=>b.addEventListener('click',()=>{let v={germany:[9,51,2.5],norway:[10,62,2],svalbard:[18,78,2],world:[0,15,1]}[b.dataset.place];if(v){[lon,lat,zoom]=v;draw()}}));
+ ['plus','minus','reset'].forEach(id=>$(id)?.addEventListener('click',()=>{if(id==='reset'){lon=9;lat=28;zoom=1;view='globe'}else zoom=Math.max(.7,Math.min(7,zoom*(id==='plus'?1.2:1/1.2)));draw()}));
+ $('zoom')?.addEventListener('input',e=>zoomTo(Number(e.target.value)/100));
+ document.querySelectorAll('input[type=checkbox],select').forEach(el=>el.addEventListener('change',draw));
+ $('mapstatus').textContent='⚠ Vereinfachte Offline-Ansicht: Kartenbibliotheken nicht geladen. Die Länderumrisse sind schematisch. Für genaue Grenzen Internet/CDN-Zugriff prüfen.';
+ draw();window.addEventListener('resize',draw);
+});
+</script>
 </body></html>
