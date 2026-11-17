@@ -107,7 +107,7 @@ for(const n of zz){const mid=3*n;stroke(path,lineMeridian(mid,45,57),'#ff87b0',n
 let gs=+$('gstep').value,mid=3*(+$('gzone').value);if(gs)for(let b=-90;b<=90;b+=gs)stroke(path,lineParallel(b,mid-1.5,mid+1.5),'#ff8bb580',.6);
 }
 if(point){let xy=p(point);if(xy&&d3.geoDistance(point,center)<(mode==='globe'?Math.PI/2:Math.PI)){cx.beginPath();cx.arc(xy[0],xy[1],5,0,2*Math.PI);cx.fillStyle='#ffffff';cx.fill();cx.strokeStyle='#e94049';cx.lineWidth=2;cx.stroke()}}
-$('zoomlabel').textContent=Math.round(zoom*100)+' %';$('zoom').value=Math.round(zoom*100);$('orientation').textContent=(mode==='globe'?'3D-Globus':mode==='world'?'2D-Weltkarte':'Transversal-Mercator')+' · '+center[0].toFixed(1)+'° Länge / '+center[1].toFixed(1)+'° Breite';
+window.__geoAtlasDrawn=true;$('zoomlabel').textContent=Math.round(zoom*100)+' %';$('zoom').value=Math.round(zoom*100);$('orientation').textContent=(mode==='globe'?'3D-Globus':mode==='world'?'2D-Weltkarte':'Transversal-Mercator')+' · '+center[0].toFixed(1)+'° Länge / '+center[1].toFixed(1)+'° Breite';
 }
 function updatePoint(recenter=false){
 let la=+$('lat').value,lo=+$('lon').value;if(!Number.isFinite(la)||!Number.isFinite(lo)||la<-90||la>90||lo<-180||lo>180){$('pointdata').textContent='Ungültige Koordinaten';return}
@@ -152,7 +152,7 @@ updatePoint();draw();
 <script>
 /* Dependency-free emergency renderer: protects the atlas when CDN libraries are unavailable. */
 window.addEventListener('load',function(){
- if(typeof window.d3!=='undefined' && typeof window.topojson!=='undefined')return;
+ if(window.__geoAtlasDrawn===true)return;
  const c=document.getElementById('map');if(!c)return;
  const ctx=c.getContext('2d'),$=id=>document.getElementById(id),R=Math.PI/180;
  const continents=[
