@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#0b182c">
+<title>GeoAtlas – UTM & Gauß-Krüger</title>
+<style>
+:root{font-family:Inter,system-ui,-apple-system,Segoe UI,Arial,sans-serif;color:#e9f3fa;background:#071422;font-size:14px}*{box-sizing:border-box}body{margin:0}
+header{padding:18px 22px;background:#0b2032;border-bottom:1px solid #27425b;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}h1{font-size:23px;margin:0}h2{font-size:15px;margin:0 0 12px}
+small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-columns:minmax(330px,1fr) 350px;gap:14px;max-width:1600px;padding:16px;margin:auto}.stage,.panel{background:#102338;border:1px solid #29445c;border-radius:14px;padding:14px}.stage{min-width:0}.stack{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}button,select,input[type=number]{background:#17344c;border:1px solid #41637a;color:#f0f7fa;padding:9px 11px;border-radius:8px;font:inherit}button{cursor:pointer}button.active{background:#14778c;border-color:#43d2de}button:hover{border-color:#87cbdb}button:focus-visible{outline:2px solid #f9cc78}select{width:100%}input[type=range]{flex:1;accent-color:#28c0da}input[type=number]{width:100%;min-width:0}input[type=checkbox]{accent-color:#2ed0c7}label{display:flex;align-items:center;gap:7px}.map{position:relative;background:radial-gradient(circle at 50% 40%,#205477,#061321 78%);border-radius:12px;overflow:hidden}.map canvas{display:block;width:100%;height:600px;touch-action:none;cursor:grab}.overlay{position:absolute;top:12px;left:12px;background:#081b2ccf;padding:7px 10px;border-radius:7px;font-size:12px;pointer-events:none}.bottom{top:auto;bottom:12px}.controls{display:grid;gap:12px;align-content:start}.panel{padding:14px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:5px}.row{display:flex;gap:10px;flex-wrap:wrap}.muted{font-size:12px;color:#a9c5d5}.metric{display:grid;grid-template-columns:1fr auto;gap:8px;border-bottom:1px solid #31485b;padding:6px 0}.metric strong{font-variant-numeric:tabular-nums;text-align:right}.accent1{color:#f4cb72}.accent2{color:#ff92ba}.status{padding:8px;border-radius:8px;background:#15394c}.answers{display:grid;grid-template-columns:1fr 1fr;gap:8px}.answers button{text-align:left}.answers button.correct{border-color:#3ed698;background:#14503d}.answers button.wrong{border-color:#f27f82;background:#572c38}.footer{padding:20px;text-align:center;color:#9fbbc9;font-size:12px}.map button{pointer-events:auto}@media(max-width:960px){main{grid-template-columns:1fr}.controls{grid-template-columns:1fr 1fr}.map canvas{height:460px}}@media(max-width:590px){main{padding:9px}.controls{grid-template-columns:1fr}.map canvas{height:390px}.answers{grid-template-columns:1fr}h1{font-size:19px}}
+</style>
+</head>
+<body>
+<header><div><h1>🌍 GeoAtlas <span style="color:#5bd5d3">UTM / Gauß-Krüger</span></h1><small>Interaktiver Lernatlas für Geoinformatik und Vermessung</small></div><span class="muted">WGS 84 · ETRS89-Hinweise · DHDN/GK</span></header>
+<main>
+<section class="stage">
+<div class="stack"><button data-view="globe" class="active">3D-Globus</button><button data-view="world">2D-Weltkarte</button><button data-view="tm">Transversale Mercatorprojektion</button><button id="reset">Zurücksetzen</button></div>
+<div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Klicken: Koordinaten</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
+<div class="stack"><button id="minus">−</button><input id="zoom" type="range" min="70" max="700" value="100" step="5" aria-label="Zoom"><button id="plus">+</button><strong id="zoomlabel">100 %</strong></div>
+<div class="stack"><button data-place="germany">Deutschland</button><button data-place="norway">Norwegen</button><button data-place="svalbard">Spitzbergen</button><button data-place="world">Welt</button></div>
+<div class="note">Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
+</section>
+<aside class="controls">
+<section class="panel"><h2>🗺️ Hintergrundkarte</h2>
+<div class="row"><label><input id="land" type="checkbox" checked>Landflächen</label><label><input id="borders" type="checkbox" checked>Ländergrenzen</label><label><input id="grid" type="checkbox" checked>Gradnetz</label></div>
+<p class="muted" id="mapstatus">Vereinfachte Weltkarte wird geladen …</p>
+<div class="cols"><div class="field"><label for="latstep">Breitengrade</label><select id="latstep"><option>1</option><option>5</option><option selected>10</option><option>15</option><option>30</option></select></div><div class="field"><label for="lonstep">Längengrade</label><select id="lonstep"><option>1</option><option>5</option><option selected>10</option><option>15</option><option>30</option></select></div></div>
+<label style="margin-top:10px"><input id="geolabel" type="checkbox" checked>Gradnetz beschriften</label>
+</section>
+<section class="panel"><h2 class="accent1">UTM · 60 Zonen, 20 Bänder</h2><label><input id="utm" type="checkbox" checked>UTM einblenden</label>
+<div class="cols" style="margin-top:10px"><div class="field"><label for="zone">Zone</label><select id="zone"></select></div><div class="field"><label for="band">Breitenband</label><select id="band"></select></div></div>
+<div class="row" style="margin-top:10px"><label><input id="uzones" type="checkbox" checked>Alle Zonen</label><label><input id="ubands" type="checkbox" checked>Bänder</label><label><input id="ulabel" type="checkbox" checked>Nummern</label></div>
+<label style="margin-top:10px"><input id="special" type="checkbox" checked>Sonderzonen Norwegen/Spitzbergen</label>
+<p class="muted" id="utmdesc"></p>
+</section>
+<section class="panel"><h2 class="accent2">Gauß-Krüger · Deutschland</h2><label><input id="gk" type="checkbox" checked>GK einblenden</label>
+<div class="cols" style="margin-top:10px"><div class="field"><label for="gzone">Streifen</label><select id="gzone"><option value="2">2 · 6° Ost</option><option value="3" selected>3 · 9° Ost</option><option value="4">4 · 12° Ost</option><option value="5">5 · 15° Ost</option></select></div><div class="field"><label for="gstep">GK-Breitengrade</label><select id="gstep"><option value="0">Aus</option><option value="1">1°</option><option value="5" selected>5°</option><option value="10">10°</option><option value="15">15°</option></select></div></div>
+<div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Streifen 2–5</label><label><input id="glabel" type="checkbox" checked>Nummern</label></div>
+<p class="muted">Deutsche historische 3°-Streifen; amtliche DHDN/GK-Koordinaten benötigen das Bessel-Ellipsoid und eine Datumstransformation.</p>
+</section>
+<section class="panel"><h2>📍 Punktkoordinaten</h2>
+<div class="cols"><div class="field"><label for="lat">Breite (°)</label><input id="lat" type="number" min="-90" max="90" step="0.000001" value="50.3569"></div><div class="field"><label for="lon">Länge (°)</label><input id="lon" type="number" min="-180" max="180" step="0.000001" value="7.589"></div></div>
+<button id="mark" style="margin-top:10px;width:100%">Punkt anzeigen</button><div id="pointdata" style="margin-top:10px"></div>
+<p class="muted">Die Meterkoordinaten verwenden WGS 84/UTM. ETRS89 und DHDN/GK werden nicht ohne Datumstransformation gleichgesetzt.</p>
+</section>
+<section class="panel"><h2>🎓 Prüfungsmodus <span id="score" style="float:right;font-weight:400">0/0</span></h2><p id="question"></p><div id="answers" class="answers"></div><p id="feedback" class="muted" role="status"></p><button id="next">Nächste Frage</button></section>
+</aside></main>
+<div class="footer">Datenquelle Länder: Natural Earth / world-atlas (110m), bei Internetverbindung · D3-Geo / TopoJSON · Lernanwendung, keine amtliche Vermessungssoftware</div>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo@3.1.1/dist/d3-geo.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3-geo-projection@4.0.0/dist/d3-geo-projection.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+<script>
+(()=>{'use strict';
+const $=id=>document.getElementById(id),cv=$('map'),cx=cv.getContext('2d');
+let mode='globe',center=[9,28],zoom=1,point=[7.589,50.3569],land=null,borders=null,drag=null,dragged=false,questionIndex=-1,score=0,attempts=0;
+const bands='CDEFGHJKLMNPQRSTUVWX'.split(''),limits=bands.map((b,i)=>({b,min:-80+i*8,max:i===19?84:-72+i*8}));
+for(let i=1;i<=60;i++)$('zone').add(new Option(i+' · '+(-183+i*6)+'°',i));$('zone').value='32';
+limits.forEach(x=>$('band').add(new Option(x.b+' · '+x.min+'° bis '+x.max+'°',x.b)));$('band').value='U';
+const rad=Math.PI/180,wrap=x=>((x+180)%360+360)%360-180;
+function utmZone(lon,lat){if(lat<-80||lat>84)return null;let n=Math.max(1,Math.min(60,Math.floor((lon+180)/6)+1));
+if($('special').checked){if(lat>=56&&lat<64&&lon>=3&&lon<12)n=32;if(lat>=72&&lat<84&&lon>=0&&lon<42)n=lon<9?31:lon<21?33:lon<33?35:37;}return n}
+function bandOf(lat){if(lat===84)return 'X';let x=limits.find(x=>lat>=x.min&&lat<x.max);return x?x.b:null}
+function wgsUTM(la,lo,zone){const a=6378137,f=1/298.257223563,e=f*(2-f),ep=e/(1-e),k=.9996,phi=la*rad,d=wrap(lo-(zone*6-183))*rad,s=Math.sin(phi),cos=Math.cos(phi),tan=Math.tan(phi),N=a/Math.sqrt(1-e*s*s),T=tan*tan,C=ep*cos*cos,A=cos*d;
+let M=a*((1-e/4-3*e*e/64-5*e**3/256)*phi-(3*e/8+3*e*e/32+45*e**3/1024)*Math.sin(2*phi)+(15*e*e/256+45*e**3/1024)*Math.sin(4*phi)-(35*e**3/3072)*Math.sin(6*phi));
+return [500000+k*N*(A+(1-T+C)*A**3/6+(5-18*T+T*T+72*C-58*ep)*A**5/120),k*(M+N*tan*(A*A/2+(5-T+9*C+4*C*C)*A**4/24+(61-58*T+T*T+600*C-330*ep)*A**6/720))+(la<0?10000000:0)]}
+function dimensions(){const w=cv.clientWidth,h=cv.clientHeight,d=Math.min(2,window.devicePixelRatio||1);cv.width=Math.round(w*d);cv.height=Math.round(h*d);cx.setTransform(d,0,0,d,0,0);return {w,h}}
+function projection(w,h){let p=mode==='globe'?d3.geoOrthographic():mode==='world'?d3.geoEquirectangular():d3.geoTransverseMercator();let scale=(mode==='globe'?Math.min(w*.47,h*.47):mode==='world'?Math.min(w/(2*Math.PI),h/Math.PI)*.94:Math.min(w*.3,h*.44))*zoom;
+p.translate([w/2,h/2]).scale(scale).rotate([-center[0],-center[1],0]).precision(.35);
+if(mode==='globe')p.clipAngle(90);
+else if(mode==='tm')p.clipAngle(85);
+return p}
+function lineMeridian(lon,a=-80,b=84){return {type:'LineString',coordinates:Array.from({length:Math.ceil((b-a)/.5)+1},(_,i)=>[lon,Math.min(b,a+i*.5)])}}
+function lineParallel(lat,a=-180,b=180){return {type:'LineString',coordinates:Array.from({length:Math.ceil((b-a)/1)+1},(_,i)=>[Math.min(b,a+i),lat])}}
+function stroke(path,geo,col,width=1,dash=[]){cx.beginPath();path(geo);cx.strokeStyle=col;cx.lineWidth=width;cx.setLineDash(dash);cx.stroke();cx.setLineDash([])}
+function fill(path,geo,color){cx.beginPath();path(geo);cx.fillStyle=color;cx.fill()}
+function text(p,lon,lat,label,color='#e6f8fd',size=11){let xy=p([lon,lat]);if(!xy||!Number.isFinite(xy[0])||!Number.isFinite(xy[1]))return;const [x,y]=xy;if(x<4||x>cv.clientWidth-4||y<4||y>cv.clientHeight-4)return;if(mode==='globe'&&d3.geoDistance([lon,lat],center)>Math.PI/2-.05)return;cx.font='600 '+size+'px system-ui';cx.textAlign='center';cx.lineWidth=3;cx.strokeStyle='#102338';cx.strokeText(label,x,y);cx.fillStyle=color;cx.fillText(label,x,y)}
+function utmCells(z,band){let lat=limits.find(x=>x.b===band);if(!lat)return[];let lo=-180+(z-1)*6,hi=lo+6;
+if($('special').checked){
+if(lat.b==='V'&&z===31)hi=3;if(lat.b==='V'&&z===32){lo=3;hi=12;}if(lat.b==='V'&&z===33)lo=12;
+if(lat.b==='X'&&z>=31&&z<=37){let bounds={31:[0,9],32:null,33:[9,21],34:null,35:[21,33],36:null,37:[33,42]};if(bounds[z]===null)return[];[lo,hi]=bounds[z];}
+}
+return [{type:'Polygon',coordinates:[[[lo,lat.min],[hi,lat.min],[hi,lat.max],[lo,lat.max],[lo,lat.min]]]}]}
+function draw(){
+if(typeof d3==='undefined'){$('mapstatus').textContent='Kartenbibliothek nicht geladen. Internetverbindung prüfen.';return}
+const {w,h}=dimensions();cx.clearRect(0,0,w,h);const p=projection(w,h),path=d3.geoPath(p,cx),sphere={type:'Sphere'};
+cx.fillStyle='#0a2943';cx.fillRect(0,0,w,h);
+if(mode==='globe'){fill(path,sphere,'#1b5272');stroke(path,sphere,'#86c8db',1.1)}
+if($('land').checked&&land)fill(path,land,'#7eaf92');
+if($('borders').checked&&borders)stroke(path,borders,'#305a4b',.75);
+if($('grid').checked){
+let ls=+$('latstep').value,os=+$('lonstep').value;
+for(let l=-180;l<180;l+=os)stroke(path,lineMeridian(l,-90,90),'#c6e9ed65',os===1?.35:.6);
+for(let b=-90;b<=90;b+=ls)stroke(path,lineParallel(b),'#d2f0e580',b===0?1.2:.7);
+if($('geolabel').checked){for(let l=-180;l<180;l+=os)text(p,l,Math.max(-70,center[1]-20),l+'°','#d6edfc',9);for(let b=-90;b<=90;b+=ls)text(p,center[0]+24,b,b+'°','#d3fae5',9)}
+}
+if($('utm').checked){
+if($('uzones').checked)for(let l=-180;l<=180;l+=6)stroke(path,lineMeridian(l,-80,84),'#efc36b99',1);
+if($('ubands').checked)for(const a of [-80,...limits.map(x=>x.max)])stroke(path,lineParallel(a),'#edcc7a94',.9);
+if($('special').checked){for(const [l,a,b] of [[3,56,64],[12,56,64],[0,72,84],[9,72,84],[21,72,84],[33,72,84],[42,72,84]])stroke(path,lineMeridian(l,a,b),'#ffde80',2.4)}
+let z=+$('zone').value,band=$('band').value;let cells=utmCells(z,band);for(let poly of cells){fill(path,poly,'#f4c45e30');stroke(path,poly,'#ffe59a',2)}
+if($('ulabel').checked){for(let i=1;i<=60;i++)text(p,-183+i*6,2,String(i),'#ffdf9a',10);for(const bb of limits)text(p,center[0]+18,(bb.min+bb.max)/2,bb.b,'#ffdf9a',10)}
+$('utmdesc').textContent='Gewählt: '+z+band+(cells.length?'':' · Sonderzone in diesem Breitenband nicht vorhanden');
+}
+if($('gk').checked){
+let zz=$('allgk').checked?[2,3,4,5]:[+$('gzone').value];
+for(const n of zz){const mid=3*n;stroke(path,lineMeridian(mid,45,57),'#ff87b0',n===+$('gzone').value?2.6:1.3);stroke(path,lineMeridian(mid-1.5,45,57),'#ffabc5',1,[4,3]);stroke(path,lineMeridian(mid+1.5,45,57),'#ffabc5',1,[4,3]);if($('glabel').checked)text(p,mid,53,'GK '+n,'#ffd1e1',10)}
+let gs=+$('gstep').value,mid=3*(+$('gzone').value);if(gs)for(let b=-90;b<=90;b+=gs)stroke(path,lineParallel(b,mid-1.5,mid+1.5),'#ff8bb580',.6);
+}
+if(point){let xy=p(point);if(xy&&d3.geoDistance(point,center)<(mode==='globe'?Math.PI/2:Math.PI)){cx.beginPath();cx.arc(xy[0],xy[1],5,0,2*Math.PI);cx.fillStyle='#ffffff';cx.fill();cx.strokeStyle='#e94049';cx.lineWidth=2;cx.stroke()}}
+$('zoomlabel').textContent=Math.round(zoom*100)+' %';$('zoom').value=Math.round(zoom*100);$('orientation').textContent=(mode==='globe'?'3D-Globus':mode==='world'?'2D-Weltkarte':'Transversal-Mercator')+' · '+center[0].toFixed(1)+'° Länge / '+center[1].toFixed(1)+'° Breite';
+}
+function updatePoint(recenter=false){
+let la=+$('lat').value,lo=+$('lon').value;if(!Number.isFinite(la)||!Number.isFinite(lo)||la<-90||la>90||lo<-180||lo>180){$('pointdata').textContent='Ungültige Koordinaten';return}
+point=[lo,la];if(recenter){center=[lo,la];}
+let z=utmZone(lo,la),band=bandOf(la),coords=z?wgsUTM(la,lo,z):null;
+let records=[['Breite',la.toFixed(6)+'°'],['Länge',lo.toFixed(6)+'°'],['UTM-Zone',z?z+band:'UPS-Bereich']];
+if(coords)records.push(['Easting',Math.round(coords[0]).toLocaleString('de-DE')+' m'],['Northing',Math.round(coords[1]).toLocaleString('de-DE')+' m'],['WGS84 EPSG',String((la>=0?32600:32700)+z)]);
+if(lo>=4.5&&lo<=16.5&&la>=45&&la<=57){let g=Math.round(lo/3);records.push(['GK-Mittelmeridian',3*g+'° Ost (Streifen '+g+')'])}
+$('pointdata').replaceChildren(...records.map(([k,v])=>{let box=document.createElement('div');box.className='metric';let a=document.createElement('span'),b=document.createElement('strong');a.textContent=k;b.textContent=v;box.append(a,b);return box}));draw()
+}
+function setView(v){mode=v;document.querySelectorAll('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===v));draw()}
+function setZoom(v){zoom=Math.max(.7,Math.min(7,v));draw()}
+document.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>setView(b.dataset.view));
+document.querySelectorAll('[data-place]').forEach(b=>b.onclick=()=>{let targets={germany:[9,51,2.5],norway:[10,62,1.9],svalbard:[18,78,2.2],world:[0,15,1]};[...center,zoom]=targets[b.dataset.place];draw()});
+$('reset').onclick=()=>{center=[9,28];zoom=1;setView('globe')};
+$('plus').onclick=()=>setZoom(zoom*1.2);$('minus').onclick=()=>setZoom(zoom/1.2);$('zoom').oninput=e=>setZoom(+e.target.value/100);
+$('mark').onclick=()=>updatePoint(true);
+cv.addEventListener('wheel',e=>{e.preventDefault();setZoom(zoom*(e.deltaY<0?1.15:1/1.15))},{passive:false});
+cv.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY,e.clientX,e.clientY];dragged=false;cv.setPointerCapture(e.pointerId)});
+cv.addEventListener('pointermove',e=>{if(!drag)return;let dx=e.clientX-drag[0],dy=e.clientY-drag[1];if(Math.hypot(e.clientX-drag[2],e.clientY-drag[3])>5)dragged=true;center=[wrap(center[0]-dx*.25/zoom),Math.max(-88,Math.min(88,center[1]+dy*.25/zoom))];drag[0]=e.clientX;drag[1]=e.clientY;draw()});
+cv.addEventListener('pointerup',e=>{if(!dragged&&typeof d3!=='undefined'){let rect=cv.getBoundingClientRect(),p=projection(cv.clientWidth,cv.clientHeight),xy=p.invert([e.clientX-rect.left,e.clientY-rect.top]);if(xy&&Number.isFinite(xy[0])&&Number.isFinite(xy[1])&&xy[1]>=-90&&xy[1]<=90){point=[wrap(xy[0]),xy[1]];$('lon').value=point[0].toFixed(6);$('lat').value=point[1].toFixed(6);updatePoint()}}drag=null});
+cv.addEventListener('pointercancel',()=>drag=null);
+document.querySelectorAll('input[type=checkbox],select').forEach(el=>el.addEventListener('change',draw));
+const quiz=[
+['Wie viele UTM-Längenzonen existieren?',['30','60','120','20'],1,'UTM besitzt 60 reguläre Längenzonen, jeweils grundsätzlich 6° breit.'],
+['Wo endet der reguläre UTM-Bereich im Norden?',['84° N','90° N','80° N','72° N'],0,'Von 84° Nord bis zum Pol wird regulär UPS verwendet.'],
+['Wo liegt der Mittelmeridian des GK-Streifens 3?',['6° Ost','9° Ost','12° Ost','3° Ost'],1,'Die deutsche GK-Zone 3 hat den Mittelmeridian bei 9° Ost.'],
+['Welche UTM-Zone umfasst Koblenz?',['31','33','32','35'],2,'Koblenz liegt in Zone 32, im Breitenband U.'],
+['Wie breit ist das UTM-Band X?',['6°','8°','10°','12°'],3,'Das nördlichste UTM-Band X reicht von 72° bis 84° N.'],
+['Welches Ellipsoid benutzt DHDN/GK?',['Bessel 1841','GRS80','WGS84','Kugel'],0,'Die historische GK-Abbildung in Deutschland verwendet das Bessel-Ellipsoid.'],
+['Welche EPSG-Kennung gehört zu ETRS89/UTM 32N?',['31467','4326','25832','3857'],2,'EPSG:25832 ist ETRS89 / UTM Zone 32N.'],
+['Was ist bei UTM in Spitzbergen anders?',['Nur die Höhen','Sonderzonengrenzen','Keine Längengrade','Alle Zonen 3°'],1,'Es gelten Sonderzonen 31, 33, 35 und 37 im Band X.']
+];
+function nextQ(){questionIndex=(questionIndex+1)%quiz.length;let q=quiz[questionIndex],answered=false;$('question').textContent=(questionIndex+1)+'. '+q[0];$('answers').replaceChildren();$('feedback').textContent='';q[1].forEach((answer,i)=>{let btn=document.createElement('button');btn.textContent=answer;btn.onclick=()=>{if(answered)return;answered=true;attempts++;if(i===q[2])score++;$('score').textContent=score+'/'+attempts;Array.from($('answers').children).forEach((b,j)=>{b.disabled=true;if(j===q[2])b.classList.add('correct');else if(j===i)b.classList.add('wrong')});$('feedback').textContent=(i===q[2]?'Richtig! ':'Nicht ganz. ')+q[4]};$('answers').append(btn)})}
+$('next').onclick=nextQ;nextQ();
+window.addEventListener('resize',draw);
+Promise.all([fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json').then(r=>r.json()),fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json())]).then(([l,b])=>{land=topojson.feature(l,l.objects.land);borders=topojson.mesh(b,b.objects.countries,(a,c)=>a!==c);$('mapstatus').textContent='✓ Leichte Naturkarte (110m) und Ländergrenzen geladen.';draw()}).catch(()=>$('mapstatus').textContent='Länderkarte momentan nicht erreichbar. Gradnetz bleibt nutzbar.');
+updatePoint();draw();
+})();
+</script>
+</body></html>
