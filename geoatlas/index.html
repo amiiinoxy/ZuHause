@@ -68,7 +68,7 @@ const $=id=>document.getElementById(id),cv=$('map'),cx=cv.getContext('2d');
 if(typeof window.d3==='undefined'||typeof window.topojson==='undefined'){document.getElementById('mapstatus').textContent='Kartenbibliothek konnte nicht geladen werden. Bitte die Seite mit Internetverbindung neu laden.';return;}
 let mode='globe',center=[9,28],zoom=1,point=[7.589,50.3569],land=null,borders=null,drag=null,dragged=false,questionIndex=-1,score=0,attempts=0;
 let earthPixels=null,earthWidth=0,earthHeight=0,earthLoadFinished=false;
-const earthUrls=['https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg','https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg'];
+const earthUrls=['https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg','https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/textures/planets/earth_atmos_2048.jpg'];
 const bands='CDEFGHJKLMNPQRSTUVWX'.split(''),limits=bands.map((b,i)=>({b,min:-80+i*8,max:i===19?84:-72+i*8}));
 for(let i=1;i<=60;i++)$('zone').add(new Option(i+' · '+(-183+i*6)+'°',i));$('zone').value='32';
 limits.forEach(x=>$('band').add(new Option(x.b+' · '+x.min+'° bis '+x.max+'°',x.b)));$('band').value='U';
