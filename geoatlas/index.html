@@ -32,11 +32,7 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="stack"><button data-view="globe" class="active">3D-Globus</button><button data-view="world">2D-Weltkarte</button><button data-view="tm">Transversale Mercatorprojektion</button><button id="reset">Zurücksetzen</button></div>
 <div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Mausrad über der Erde: Zoom · Klicken: Koordinaten</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
 <div class="stack"><button id="minus">−</button><input id="zoom" type="range" min="70" max="700" value="100" step="5" aria-label="Zoom"><button id="plus">+</button><strong id="zoomlabel">100 %</strong></div>
-<div class="opacity-controls" aria-label="Transparenz der Kartenebenen">
- <div class="opacity-control" style="grid-column:1/-1"><label for="map-all-opacity"><span>Alle farbigen Flächen (alle Systeme)</span><strong id="map-all-value">100 %</strong></label><input id="map-all-opacity" type="range" min="0" max="100" step="5" value="100" aria-label="Gesamtdeckkraft der farbigen Zonenflächen"></div>
- <div class="opacity-control"><label for="map-utm-opacity"><span style="color:#f4cb72">UTM-Flächen</span><strong id="map-utm-value">45 %</strong></label><input id="map-utm-opacity" type="range" min="0" max="100" step="5" value="45" aria-label="UTM Flächen Deckkraft unter der Karte"></div>
- <div class="opacity-control"><label for="map-gk-opacity"><span style="color:#ff92ba">GK-Flächen</span><strong id="map-gk-value">30 %</strong></label><input id="map-gk-opacity" type="range" min="0" max="100" step="5" value="30" aria-label="GK Flächen Deckkraft unter der Karte"></div>
-</div>
+
 <div class="stack"><button data-place="germany">Deutschland</button><button data-place="norway">Norwegen</button><button data-place="svalbard">Spitzbergen</button><button data-place="world">Welt</button></div>
 <div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit dem Mausrad direkt über der Erde oder den +/−-Tasten zoomst du die Karte. Die Satellitentextur ist ein optionales öffentliches Erdoberflächenbild und benötigt eine Internetverbindung; bei Ladefehlern bleibt die Vektorkarte erhalten. Beleuchtung und Sternenhintergrund sind dekorativ, nicht astronomisch positionsgetreu. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
 </section>
@@ -51,19 +47,12 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="cols" style="margin-top:10px"><div class="field"><label for="zone">Zone</label><select id="zone"></select></div><div class="field"><label for="band">Breitenband</label><select id="band"></select></div></div>
 <div class="row" style="margin-top:10px"><label><input id="uzones" type="checkbox" checked>Alle Zonen</label><label><input id="ubands" type="checkbox" checked>Bänder</label><label><input id="ulabel" type="checkbox" checked>Nummern</label></div>
 <label style="margin-top:10px"><input id="special" type="checkbox" checked>Sonderzonen Norwegen/Spitzbergen</label>
-<div class="field" style="margin-top:12px">
-<label for="utmopacity">UTM-Flächentransparenz <strong id="utmopacityvalue" style="margin-left:auto">45 % Deckkraft</strong></label>
-<input id="utmopacity" type="range" min="0" max="100" step="5" value="45" aria-label="UTM Deckkraft">
-</div><p class="muted" id="utmdesc"></p>
+<p class="muted" id="utmdesc"></p>
 </section>
 <section class="panel"><h2 class="accent2">3°-GK-Prinzip · weltweit</h2><label><input id="gk" type="checkbox" checked>GK einblenden</label>
 <div class="cols" style="margin-top:10px"><div class="field"><label for="gzone">Streifen</label><select id="gzone"></select></div><div class="field"><label for="gstep">GK-Breitengrade</label><select id="gstep"><option value="0">Aus</option><option value="1">1°</option><option value="5" selected>5°</option><option value="10">10°</option><option value="15">15°</option></select></div></div>
 <div class="cols" style="margin-top:10px"><div class="field"><label for="gband">GK-Breitenstreifen (B-Nummer)</label><select id="gband"></select></div><div class="field"><label for="gbandstep">Bandhöhe</label><select id="gbandstep"><option value="10" selected>10° · 18 Bänder</option><option value="15">15° · 12 Bänder</option><option value="30">30° · 6 Bänder</option></select></div></div>
 <div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Alle Zonen</label><label><input id="gbands" type="checkbox" checked>Alle Bänder</label><label><input id="glabel" type="checkbox" checked>Zonennummern</label><label><input id="gbandlabel" type="checkbox" checked>Breitenstreifen-Nummern (B01 …)</label></div>
-<div class="field" style="margin-top:12px">
-<label for="gkopacity">GK-Flächentransparenz <strong id="gkopacityvalue" style="margin-left:auto">30 % Deckkraft</strong></label>
-<input id="gkopacity" type="range" min="0" max="100" step="5" value="30" aria-label="Gauß-Krüger Deckkraft">
-</div>
 <p class="muted">Weltweites schematisches 3°-Meridianstreifennetz. Die nummerierten Breitenstreifen B01–B18 (bei 10°; vom Südpol nach Norden) sind ausschließlich Lernhilfen, keine offiziellen GK-Bänder. Die globalen Zonen-Indizes außerhalb Deutschlands sind ebenfalls nicht amtlich. DHDN/GK benötigt das Bessel-Ellipsoid und eine Datumstransformation.</p>
 </section>
 <section class="panel"><h2>📍 Punktkoordinaten</h2>
@@ -106,15 +95,9 @@ function lineMeridian(lon,a=-80,b=84){return {type:'LineString',coordinates:Arra
 function lineParallel(lat,a=-180,b=180){return {type:'LineString',coordinates:Array.from({length:Math.ceil((b-a)/1)+1},(_,i)=>[Math.min(b,a+i),lat])}}
 function stroke(path,geo,col,width=1,dash=[]){cx.beginPath();path(geo);cx.strokeStyle=col;cx.lineWidth=width;cx.setLineDash(dash);cx.stroke();cx.setLineDash([])}
 function fill(path,geo,color){cx.beginPath();path(geo);cx.fillStyle=color;cx.fill()}
-function fillLayer(path,geo,color,layer){
- const all=Number($('map-all-opacity').value)/100;
- const individual=Number($(layer==='utm'?'utmopacity':'gkopacity').value)/100;
- const alpha=all*individual;
- if(alpha<=0)return;
- cx.save();cx.globalAlpha=alpha;
- fill(path,geo,color);
- cx.restore();
-}
+// Colored UTM/GK polygon fills are permanently disabled; grid lines and labels stay visible.
+function fillLayer(path,geo,color,layer){return;}
+
 function text(p,lon,lat,label,color='#e6f8fd',size=11){let xy=p([lon,lat]);if(!xy||!Number.isFinite(xy[0])||!Number.isFinite(xy[1]))return;const [x,y]=xy;if(x<4||x>cv.clientWidth-4||y<4||y>cv.clientHeight-4)return;if(mode==='globe'&&d3.geoDistance([lon,lat],center)>Math.PI/2-.05)return;cx.font='600 '+size+'px system-ui';cx.textAlign='center';cx.lineWidth=3;cx.strokeStyle='#102338';cx.strokeText(label,x,y);cx.fillStyle=color;cx.fillText(label,x,y)}
 function utmCells(z,band){let lat=limits.find(x=>x.b===band);if(!lat)return[];let lo=-180+(z-1)*6,hi=lo+6;
 if($('special').checked){
@@ -309,19 +292,6 @@ cv.addEventListener('pointermove',e=>{if(!drag)return;let dx=e.clientX-drag[0],d
 cv.addEventListener('pointerup',e=>{if(!dragged&&typeof d3!=='undefined'){let rect=cv.getBoundingClientRect(),p=projection(cv.clientWidth,cv.clientHeight),xy=p.invert([e.clientX-rect.left,e.clientY-rect.top]);if(xy&&Number.isFinite(xy[0])&&Number.isFinite(xy[1])&&xy[1]>=-90&&xy[1]<=90){point=[wrap(xy[0]),xy[1]];$('lon').value=point[0].toFixed(6);$('lat').value=point[1].toFixed(6);updatePoint()}}drag=null});
 cv.addEventListener('pointercancel',()=>drag=null);
 document.querySelectorAll('input[type=checkbox],select').forEach(el=>el.addEventListener('change',draw));
-$('map-all-opacity').addEventListener('input',e=>{$('map-all-value').textContent=e.target.value+' %';draw()});
-for(const [mainId,mapId,mainLabel,mapLabel] of [
- ['utmopacity','map-utm-opacity','utmopacityvalue','map-utm-value'],
- ['gkopacity','map-gk-opacity','gkopacityvalue','map-gk-value']
-]){
- const update=(value)=>{
-  $(mainId).value=value;$(mapId).value=value;
-  $(mainLabel).textContent=value+' % Deckkraft';$(mapLabel).textContent=value+' %';
-  draw();
- };
- $(mainId).addEventListener('input',e=>update(e.target.value));
- $(mapId).addEventListener('input',e=>update(e.target.value));
-}
 const quiz=[
 ['Wie viele UTM-Längenzonen existieren?',['30','60','120','20'],1,'UTM besitzt 60 reguläre Längenzonen, jeweils grundsätzlich 6° breit.'],
 ['Wo endet der reguläre UTM-Bereich im Norden?',['84° N','90° N','80° N','72° N'],0,'Von 84° Nord bis zum Pol wird regulär UPS verwendet.'],
