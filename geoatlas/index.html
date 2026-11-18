@@ -31,12 +31,12 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Mausrad über der Erde: Zoom · Klicken: Koordinaten</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
 <div class="stack"><button id="minus">−</button><input id="zoom" type="range" min="70" max="700" value="100" step="5" aria-label="Zoom"><button id="plus">+</button><strong id="zoomlabel">100 %</strong></div>
 <div class="stack"><button data-place="germany">Deutschland</button><button data-place="norway">Norwegen</button><button data-place="svalbard">Spitzbergen</button><button data-place="world">Welt</button></div>
-<div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit dem Mausrad direkt über der Erde oder den +/−-Tasten zoomst du die Karte. Der zuschaltbare Sternenhintergrund ist eine dekorative, nicht astronomisch positionsgetreue Darstellung. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
+<div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit dem Mausrad direkt über der Erde oder den +/−-Tasten zoomst du die Karte. Die Satellitentextur ist ein optionales öffentliches Erdoberflächenbild und benötigt eine Internetverbindung; bei Ladefehlern bleibt die Vektorkarte erhalten. Beleuchtung und Sternenhintergrund sind dekorativ, nicht astronomisch positionsgetreu. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
 </section>
 <aside class="controls">
 <section class="panel"><h2>🗺️ Hintergrundkarte</h2>
-<div class="row"><label><input id="land" type="checkbox" checked>Landflächen</label><label><input id="borders" type="checkbox" checked>Ländergrenzen</label><label><input id="grid" type="checkbox" checked>Gradnetz</label><label><input id="space" type="checkbox" checked>Weltraum & Sterne (3D)</label></div>
-<p class="muted" id="mapstatus">Vereinfachte Weltkarte wird geladen …</p>
+<div class="row"><label><input id="land" type="checkbox" checked>Landflächen</label><label><input id="borders" type="checkbox" checked>Ländergrenzen</label><label><input id="grid" type="checkbox" checked>Gradnetz</label><label><input id="space" type="checkbox" checked>Weltraum & Sterne (3D)</label><label><input id="earthtex" type="checkbox" checked>Realistische Erdtextur (3D)</label></div>
+<p class="muted" id="mapstatus">Vereinfachte Weltkarte wird geladen …</p><p class="muted" id="texstatus">NASA-ähnliche Erdtextur wird geladen …</p>
 <div class="cols"><div class="field"><label for="latstep">Breitengrade</label><select id="latstep"><option>1</option><option>5</option><option selected>10</option><option>15</option><option>30</option></select></div><div class="field"><label for="lonstep">Längengrade</label><select id="lonstep"><option>1</option><option>5</option><option selected>10</option><option>15</option><option>30</option></select></div></div>
 <label style="margin-top:10px"><input id="geolabel" type="checkbox" checked>Gradnetz beschriften</label>
 </section>
@@ -67,6 +67,8 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 const $=id=>document.getElementById(id),cv=$('map'),cx=cv.getContext('2d');
 if(typeof window.d3==='undefined'||typeof window.topojson==='undefined'){document.getElementById('mapstatus').textContent='Kartenbibliothek konnte nicht geladen werden. Bitte die Seite mit Internetverbindung neu laden.';return;}
 let mode='globe',center=[9,28],zoom=1,point=[7.589,50.3569],land=null,borders=null,drag=null,dragged=false,questionIndex=-1,score=0,attempts=0;
+let earthPixels=null,earthWidth=0,earthHeight=0,earthLoadFinished=false;
+const earthUrls=['https://threejs.org/examples/textures/planets/earth_atmos_2048.jpg','https://raw.githubusercontent.com/turban/webgl-earth/master/images/2_no_clouds_4k.jpg'];
 const bands='CDEFGHJKLMNPQRSTUVWX'.split(''),limits=bands.map((b,i)=>({b,min:-80+i*8,max:i===19?84:-72+i*8}));
 for(let i=1;i<=60;i++)$('zone').add(new Option(i+' · '+(-183+i*6)+'°',i));$('zone').value='32';
 limits.forEach(x=>$('band').add(new Option(x.b+' · '+x.min+'° bis '+x.max+'°',x.b)));$('band').value='U';
@@ -121,14 +123,84 @@ function drawSpace(w,h,p){
  glow.addColorStop(1,'rgba(7,26,53,0)');
  cx.fillStyle=glow;cx.beginPath();cx.arc(xy[0],xy[1],radius*1.28,0,Math.PI*2);cx.fill();
 }
+
+/**
+ * Equirectangular Earth image -> perspective orthographic globe.
+ * Coordinates use WGS84 longitudes/latitudes on a spherical visual model.
+ * The texture is optional, so grid and vector geography still work offline.
+ */
+function loadEarthTexture(urlIndex=0){
+ if(urlIndex>=earthUrls.length){
+  earthLoadFinished=true;
+  $('texstatus').textContent='Satellitentextur nicht erreichbar – Vektorkarte bleibt als Ersatz sichtbar.';
+  draw();return;
+ }
+ const im=new Image();im.crossOrigin='anonymous';
+ im.onload=()=>{
+  try{
+   const off=document.createElement('canvas');
+   const wanted=Math.min(2048,im.naturalWidth);
+   off.width=wanted;off.height=Math.min(1024,Math.round(wanted*im.naturalHeight/im.naturalWidth));
+   const oc=off.getContext('2d',{willReadFrequently:true});
+   oc.drawImage(im,0,0,off.width,off.height);
+   const dat=oc.getImageData(0,0,off.width,off.height);
+   earthPixels=dat.data;earthWidth=off.width;earthHeight=off.height;earthLoadFinished=true;
+   $('texstatus').textContent='✓ Realistische Erdtextur geladen · 3D-Schalter aktiv.';
+   draw();
+  }catch(err){loadEarthTexture(urlIndex+1)}
+ };
+ im.onerror=()=>loadEarthTexture(urlIndex+1);
+ im.src=earthUrls[urlIndex];
+}
+function drawTexturedEarth(w,h,p){
+ if(!earthPixels||mode!=='globe')return false;
+ const scale=p.scale(),origin=p.translate();
+ const sampling=Math.min(1,900/Math.max(w,h)),W=Math.max(1,Math.round(w*sampling)),H=Math.max(1,Math.round(h*sampling));
+ const ow=document.createElement('canvas');ow.width=W;ow.height=H;
+ const oc=ow.getContext('2d'),frame=oc.createImageData(W,H),dst=frame.data;
+ const theta=center[1]*rad,cosT=Math.cos(theta),sinT=Math.sin(theta);
+ const ww=earthWidth,hh=earthHeight,src=earthPixels;
+ const invScale=1/(scale*sampling),ox=origin[0]*sampling,oy=origin[1]*sampling;
+ // A gently lit hemisphere with the light coming from upper left.
+ for(let j=0;j<H;j++){
+  const Y=(oy-j-.5)*invScale;
+  if(Math.abs(Y)>1)continue;
+  const row=j*W*4;
+  for(let i=0;i<W;i++){
+   const X=(i+.5-ox)*invScale,rr=X*X+Y*Y;
+   if(rr>1)continue;
+   const Z=Math.sqrt(1-rr);
+   const sinPhi=Y*cosT+Z*sinT;
+   const phi=Math.asin(Math.max(-1,Math.min(1,sinPhi)));
+   const localZ=Z*cosT-Y*sinT;
+   const lambda=wrap(center[0]+Math.atan2(X,localZ)/rad);
+   const u=(lambda+180)/360;
+   const v=(90-phi/rad)/180;
+   const ix=Math.min(ww-1,Math.max(0,Math.floor(u*ww)));
+   const iy=Math.min(hh-1,Math.max(0,Math.floor(v*hh)));
+   const si=(iy*ww+ix)*4,di=row+i*4;
+   const illumination=Math.max(0,Z*.79-X*.37+Y*.48);
+   const shade=.35+.65*illumination;
+   dst[di]=Math.min(255,src[si]*shade);
+   dst[di+1]=Math.min(255,src[si+1]*shade);
+   dst[di+2]=Math.min(255,src[si+2]*shade*1.035);
+   dst[di+3]=255;
+  }
+ }
+ oc.putImageData(frame,0,0);
+ cx.drawImage(ow,0,0,w,h);
+ return true;
+}
+
 function draw(){
 if(typeof d3==='undefined'){$('mapstatus').textContent='Kartenbibliothek nicht geladen. Internetverbindung prüfen.';return}
 const {w,h}=dimensions();cx.clearRect(0,0,w,h);const p=projection(w,h),path=d3.geoPath(p,cx),sphere={type:'Sphere'};
 cx.fillStyle='#0a2943';cx.fillRect(0,0,w,h);
 if(mode==='globe'&&$('space').checked)drawSpace(w,h,p);
-if(mode==='globe'){fill(path,sphere,'#1b5272');stroke(path,sphere,'#86c8db',1.1)}
-if($('land').checked&&land)fill(path,land,'#7eaf92');
-if($('borders').checked&&borders)stroke(path,borders,'#305a4b',.75);
+const textured=mode==='globe'&&$('earthtex').checked&&drawTexturedEarth(w,h,p);
+if(mode==='globe'){if(!textured)fill(path,sphere,'#1b5272');stroke(path,sphere,'#86c8db',1.1)}
+if(!textured&&$('land').checked&&land)fill(path,land,'#7eaf92');
+if($('borders').checked&&borders)stroke(path,borders,textured?'#ccebf788':'#305a4b',textured?.55:.75);
 if($('grid').checked){
 let ls=+$('latstep').value,os=+$('lonstep').value;
 for(let l=-180;l<180;l+=os)stroke(path,lineMeridian(l,-90,90),'#c6e9ed65',os===1?.35:.6);
@@ -224,7 +296,7 @@ function nextQ(){questionIndex=(questionIndex+1)%quiz.length;let q=quiz[question
 $('next').onclick=nextQ;nextQ();
 window.addEventListener('resize',draw);
 Promise.all([fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/land-110m.json').then(r=>r.json()),fetch('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(r=>r.json())]).then(([l,b])=>{land=topojson.feature(l,l.objects.land);borders=topojson.mesh(b,b.objects.countries,(a,c)=>a!==c);$('mapstatus').textContent='✓ Leichte Naturkarte (110m) und Ländergrenzen geladen.';draw()}).catch(()=>$('mapstatus').textContent='Länderkarte momentan nicht erreichbar. Gradnetz bleibt nutzbar.');
-updatePoint();draw();
+updatePoint();draw();loadEarthTexture();
 })();
 </script>
 </body></html>
