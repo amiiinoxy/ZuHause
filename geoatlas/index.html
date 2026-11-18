@@ -35,8 +35,9 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 </section>
 <section class="panel"><h2 class="accent2">3°-GK-Prinzip · weltweit</h2><label><input id="gk" type="checkbox" checked>GK einblenden</label>
 <div class="cols" style="margin-top:10px"><div class="field"><label for="gzone">Streifen</label><select id="gzone"></select></div><div class="field"><label for="gstep">GK-Breitengrade</label><select id="gstep"><option value="0">Aus</option><option value="1">1°</option><option value="5" selected>5°</option><option value="10">10°</option><option value="15">15°</option></select></div></div>
-<div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Alle 120 Streifen weltweit</label><label><input id="glabel" type="checkbox" checked>Nummern</label></div>
-<p class="muted">Geometrisches weltweites 3°-Modell mit Mittelmeridianen bei 3°·n (n = −59 bis 60, 120 Streifen einschließlich Datumsgrenze). Die Nummern außerhalb Deutschlands sind nur Modell-Indizes, keine weltweit amtlichen GK-Zonen. DHDN/GK benötigt das Bessel-Ellipsoid und eine Datumstransformation.</p>
+<div class="cols" style="margin-top:10px"><div class="field"><label for="gband">Geografisches Breitenband</label><select id="gband"></select></div><div class="field"><label for="gbandstep">Bandhöhe</label><select id="gbandstep"><option value="10" selected>10° · 18 Bänder</option><option value="15">15° · 12 Bänder</option><option value="30">30° · 6 Bänder</option></select></div></div>
+<div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Alle Zonen</label><label><input id="gbands" type="checkbox" checked>Alle Bänder</label><label><input id="glabel" type="checkbox" checked>Zonennummern</label><label><input id="gbandlabel" type="checkbox" checked>Bandnummern</label></div>
+<p class="muted">Weltweites schematisches 3°-Meridianstreifennetz. Die Breitenbänder (z. B. 18 × 10°) und Bandnummern sind ausschließlich Lernhilfen, keine offiziellen GK-Bänder. Die globalen Zonen-Indizes außerhalb Deutschlands sind ebenfalls nicht amtlich. DHDN/GK benötigt das Bessel-Ellipsoid und eine Datumstransformation.</p>
 </section>
 <section class="panel"><h2>📍 Punktkoordinaten</h2>
 <div class="cols"><div class="field"><label for="lat">Breite (°)</label><input id="lat" type="number" min="-90" max="90" step="0.000001" value="50.3569"></div><div class="field"><label for="lon">Länge (°)</label><input id="lon" type="number" min="-180" max="180" step="0.000001" value="7.589"></div></div>
@@ -57,6 +58,8 @@ const bands='CDEFGHJKLMNPQRSTUVWX'.split(''),limits=bands.map((b,i)=>({b,min:-80
 for(let i=1;i<=60;i++)$('zone').add(new Option(i+' · '+(-183+i*6)+'°',i));$('zone').value='32';
 limits.forEach(x=>$('band').add(new Option(x.b+' · '+x.min+'° bis '+x.max+'°',x.b)));$('band').value='U';
 for(let n=-59;n<=60;n++){let mer=n*3,hem=mer<0?' W':mer>0?' O':'',title=(n>=2&&n<=5?'GK '+n:'Modell '+n)+' · '+Math.abs(mer)+'°'+hem;$('gzone').add(new Option(title,n));}$('gzone').value='3';
+function fillGKBands(){const step=+$('gbandstep').value,sel=+$('gband').value;$('gband').replaceChildren();for(let y=-90,i=1;y<90;y+=step,i++)$('gband').add(new Option('Band '+String(i).padStart(2,'0')+' · '+y+'° bis '+(y+step)+'°',i));$('gband').value=String(Math.max(1,Math.min(180/step,Number.isFinite(sel)&&sel>0?sel:Math.floor((50+90)/step)+1)))}
+fillGKBands();$('gbandstep').addEventListener('change',()=>{fillGKBands();draw()});
 const rad=Math.PI/180,wrap=x=>((x+180)%360+360)%360-180;
 function utmZone(lon,lat){if(lat<-80||lat>84)return null;let n=Math.max(1,Math.min(60,Math.floor((lon+180)/6)+1));
 if($('special').checked){if(lat>=56&&lat<64&&lon>=3&&lon<12)n=32;if(lat>=72&&lat<84&&lon>=0&&lon<42)n=lon<9?31:lon<21?33:lon<33?35:37;}return n}
@@ -118,6 +121,18 @@ for(const n of mids){
 }
 const selMid=chosen*3;
 if(all)stroke(path,lineMeridian(selMid,-89.5,89.5),'#ff458d',3);
+// Unofficial global numbered latitude bands, fully independent of UTM.
+const step=+$('gbandstep').value,band=+$('gband').value,low=-90+(band-1)*step,high=low+step;
+if($('gbands').checked){
+ for(let y=-90;y<=90;y+=step)stroke(path,lineParallel(y),'#ff93bd99',.95);
+ const box={type:'Polygon',coordinates:[[[selMid-1.5,low],[selMid+1.5,low],[selMid+1.5,high],[selMid-1.5,high],[selMid-1.5,low]]]};
+ fill(path,box,'#ff5d9630');
+ stroke(path,lineParallel(low,selMid-1.5,selMid+1.5),'#ffc0d9',2);
+ stroke(path,lineParallel(high,selMid-1.5,selMid+1.5),'#ffc0d9',2);
+}
+if($('gbandlabel').checked){
+ for(let y=-90,i=1;y<90;y+=step,i++)text(p,wrap(center[0]+18),y+step/2,String(i).padStart(2,'0'),'#ffcae0',10);
+}
 const gs=+$('gstep').value;
 if(gs)for(let y=-90;y<=90;y+=gs){
  const start=selMid-1.5,end=selMid+1.5;
