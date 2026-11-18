@@ -33,9 +33,9 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Mausrad über der Erde: Zoom · Klicken: Koordinaten</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
 <div class="stack"><button id="minus">−</button><input id="zoom" type="range" min="70" max="700" value="100" step="5" aria-label="Zoom"><button id="plus">+</button><strong id="zoomlabel">100 %</strong></div>
 <div class="opacity-controls" aria-label="Transparenz der Kartenebenen">
- <div class="opacity-control" style="grid-column:1/-1"><label for="map-all-opacity"><span>Alle Koordinatenlinien & Nummern (jede Farbe)</span><strong id="map-all-value">70 %</strong></label><input id="map-all-opacity" type="range" min="0" max="100" step="5" value="70" aria-label="Gesamtdeckkraft aller Koordinatenlinien und Beschriftungen"></div>
- <div class="opacity-control"><label for="map-utm-opacity"><span style="color:#f4cb72">UTM</span><strong id="map-utm-value">45 %</strong></label><input id="map-utm-opacity" type="range" min="0" max="100" step="5" value="45" aria-label="UTM Deckkraft unter der Karte"></div>
- <div class="opacity-control"><label for="map-gk-opacity"><span style="color:#ff92ba">Gauß-Krüger</span><strong id="map-gk-value">30 %</strong></label><input id="map-gk-opacity" type="range" min="0" max="100" step="5" value="30" aria-label="GK Deckkraft unter der Karte"></div>
+ <div class="opacity-control" style="grid-column:1/-1"><label for="map-all-opacity"><span>Alle farbigen Flächen (alle Systeme)</span><strong id="map-all-value">100 %</strong></label><input id="map-all-opacity" type="range" min="0" max="100" step="5" value="100" aria-label="Gesamtdeckkraft der farbigen Zonenflächen"></div>
+ <div class="opacity-control"><label for="map-utm-opacity"><span style="color:#f4cb72">UTM-Flächen</span><strong id="map-utm-value">45 %</strong></label><input id="map-utm-opacity" type="range" min="0" max="100" step="5" value="45" aria-label="UTM Flächen Deckkraft unter der Karte"></div>
+ <div class="opacity-control"><label for="map-gk-opacity"><span style="color:#ff92ba">GK-Flächen</span><strong id="map-gk-value">30 %</strong></label><input id="map-gk-opacity" type="range" min="0" max="100" step="5" value="30" aria-label="GK Flächen Deckkraft unter der Karte"></div>
 </div>
 <div class="stack"><button data-place="germany">Deutschland</button><button data-place="norway">Norwegen</button><button data-place="svalbard">Spitzbergen</button><button data-place="world">Welt</button></div>
 <div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit dem Mausrad direkt über der Erde oder den +/−-Tasten zoomst du die Karte. Die Satellitentextur ist ein optionales öffentliches Erdoberflächenbild und benötigt eine Internetverbindung; bei Ladefehlern bleibt die Vektorkarte erhalten. Beleuchtung und Sternenhintergrund sind dekorativ, nicht astronomisch positionsgetreu. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
@@ -52,7 +52,7 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="row" style="margin-top:10px"><label><input id="uzones" type="checkbox" checked>Alle Zonen</label><label><input id="ubands" type="checkbox" checked>Bänder</label><label><input id="ulabel" type="checkbox" checked>Nummern</label></div>
 <label style="margin-top:10px"><input id="special" type="checkbox" checked>Sonderzonen Norwegen/Spitzbergen</label>
 <div class="field" style="margin-top:12px">
-<label for="utmopacity">UTM-Transparenz <strong id="utmopacityvalue" style="margin-left:auto">45 % Deckkraft</strong></label>
+<label for="utmopacity">UTM-Flächentransparenz <strong id="utmopacityvalue" style="margin-left:auto">45 % Deckkraft</strong></label>
 <input id="utmopacity" type="range" min="0" max="100" step="5" value="45" aria-label="UTM Deckkraft">
 </div><p class="muted" id="utmdesc"></p>
 </section>
@@ -61,7 +61,7 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="cols" style="margin-top:10px"><div class="field"><label for="gband">GK-Breitenstreifen (B-Nummer)</label><select id="gband"></select></div><div class="field"><label for="gbandstep">Bandhöhe</label><select id="gbandstep"><option value="10" selected>10° · 18 Bänder</option><option value="15">15° · 12 Bänder</option><option value="30">30° · 6 Bänder</option></select></div></div>
 <div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Alle Zonen</label><label><input id="gbands" type="checkbox" checked>Alle Bänder</label><label><input id="glabel" type="checkbox" checked>Zonennummern</label><label><input id="gbandlabel" type="checkbox" checked>Breitenstreifen-Nummern (B01 …)</label></div>
 <div class="field" style="margin-top:12px">
-<label for="gkopacity">GK-Transparenz <strong id="gkopacityvalue" style="margin-left:auto">30 % Deckkraft</strong></label>
+<label for="gkopacity">GK-Flächentransparenz <strong id="gkopacityvalue" style="margin-left:auto">30 % Deckkraft</strong></label>
 <input id="gkopacity" type="range" min="0" max="100" step="5" value="30" aria-label="Gauß-Krüger Deckkraft">
 </div>
 <p class="muted">Weltweites schematisches 3°-Meridianstreifennetz. Die nummerierten Breitenstreifen B01–B18 (bei 10°; vom Südpol nach Norden) sind ausschließlich Lernhilfen, keine offiziellen GK-Bänder. Die globalen Zonen-Indizes außerhalb Deutschlands sind ebenfalls nicht amtlich. DHDN/GK benötigt das Bessel-Ellipsoid und eine Datumstransformation.</p>
@@ -106,6 +106,15 @@ function lineMeridian(lon,a=-80,b=84){return {type:'LineString',coordinates:Arra
 function lineParallel(lat,a=-180,b=180){return {type:'LineString',coordinates:Array.from({length:Math.ceil((b-a)/1)+1},(_,i)=>[Math.min(b,a+i),lat])}}
 function stroke(path,geo,col,width=1,dash=[]){cx.beginPath();path(geo);cx.strokeStyle=col;cx.lineWidth=width;cx.setLineDash(dash);cx.stroke();cx.setLineDash([])}
 function fill(path,geo,color){cx.beginPath();path(geo);cx.fillStyle=color;cx.fill()}
+function fillLayer(path,geo,color,layer){
+ const all=Number($('map-all-opacity').value)/100;
+ const individual=Number($(layer==='utm'?'utmopacity':'gkopacity').value)/100;
+ const alpha=all*individual;
+ if(alpha<=0)return;
+ cx.save();cx.globalAlpha=alpha;
+ fill(path,geo,color);
+ cx.restore();
+}
 function text(p,lon,lat,label,color='#e6f8fd',size=11){let xy=p([lon,lat]);if(!xy||!Number.isFinite(xy[0])||!Number.isFinite(xy[1]))return;const [x,y]=xy;if(x<4||x>cv.clientWidth-4||y<4||y>cv.clientHeight-4)return;if(mode==='globe'&&d3.geoDistance([lon,lat],center)>Math.PI/2-.05)return;cx.font='600 '+size+'px system-ui';cx.textAlign='center';cx.lineWidth=3;cx.strokeStyle='#102338';cx.strokeText(label,x,y);cx.fillStyle=color;cx.fillText(label,x,y)}
 function utmCells(z,band){let lat=limits.find(x=>x.b===band);if(!lat)return[];let lo=-180+(z-1)*6,hi=lo+6;
 if($('special').checked){
@@ -215,9 +224,8 @@ const textured=mode==='globe'&&$('earthtex').checked&&drawTexturedEarth(w,h,p);
 if(mode==='globe'){if(!textured)fill(path,sphere,'#1b5272');stroke(path,sphere,'#86c8db',1.1)}
 if(!textured&&$('land').checked&&land)fill(path,land,'#7eaf92');
 if($('borders').checked&&borders)stroke(path,borders,textured?'#ccebf788':'#305a4b',textured?.55:.75);
-// Global visibility controls every coordinate overlay, regardless of its colour.
-const overlayAlpha=Number($('map-all-opacity').value)/100;
-cx.save();cx.globalAlpha=overlayAlpha;
+// Coordinate lines and all labels are always drawn at their own normal visibility.
+// Transparency sliders affect only the selected UTM/GK polygon fills.
 if($('grid').checked){
 let ls=+$('latstep').value,os=+$('lonstep').value;
 for(let l=-180;l<180;l+=os)stroke(path,lineMeridian(l,-90,90),'#c6e9ed65',os===1?.35:.6);
@@ -225,17 +233,16 @@ for(let b=-90;b<=90;b+=ls)stroke(path,lineParallel(b),'#d2f0e580',b===0?1.2:.7);
 if($('geolabel').checked){for(let l=-180;l<180;l+=os)text(p,l,Math.max(-70,center[1]-20),l+'°','#d6edfc',9);for(let b=-90;b<=90;b+=ls)text(p,center[0]+24,b,b+'°','#d3fae5',9)}
 }
 if($('utm').checked){
-cx.save();cx.globalAlpha=overlayAlpha*Number($('utmopacity').value)/100;
+// UTM line strokes remain independent of opacity.
 if($('uzones').checked)for(let l=-180;l<=180;l+=6)stroke(path,lineMeridian(l,-80,84),'#efc36b99',1);
 if($('ubands').checked)for(const a of [-80,...limits.map(x=>x.max)])stroke(path,lineParallel(a),'#edcc7a94',.9);
 if($('special').checked){for(const [l,a,b] of [[3,56,64],[12,56,64],[0,72,84],[9,72,84],[21,72,84],[33,72,84],[42,72,84]])stroke(path,lineMeridian(l,a,b),'#ffde80',2.4)}
-let z=+$('zone').value,band=$('band').value;let cells=utmCells(z,band);for(let poly of cells){fill(path,poly,'#f4c45e30');stroke(path,poly,'#ffe59a',2)}
+let z=+$('zone').value,band=$('band').value;let cells=utmCells(z,band);for(let poly of cells){fillLayer(path,poly,'#f4c45e80','utm');stroke(path,poly,'#ffe59a',2)}
 if($('ulabel').checked){for(let i=1;i<=60;i++)text(p,-183+i*6,2,String(i),'#ffdf9a',10);for(const bb of limits)text(p,center[0]+18,(bb.min+bb.max)/2,bb.b,'#ffdf9a',10)}
 $('utmdesc').textContent='Gewählt: '+z+band+(cells.length?'':' · Sonderzone in diesem Breitenband nicht vorhanden');
- cx.restore();
 }
 if($('gk').checked){
-cx.save();cx.globalAlpha=overlayAlpha*Number($('gkopacity').value)/100;
+// GK line strokes remain independent of opacity.
 const chosen=+$('gzone').value,all=$('allgk').checked;
 const mids=all?Array.from({length:120},(_,i)=>i-59):[chosen];
 for(const n of mids){
@@ -256,7 +263,7 @@ const step=+$('gbandstep').value,band=+$('gband').value,low=-90+(band-1)*step,hi
 if($('gbands').checked){
  for(let y=-90;y<=90;y+=step)stroke(path,lineParallel(y),'#ff93bd99',.95);
  const box={type:'Polygon',coordinates:[[[selMid-1.5,low],[selMid+1.5,low],[selMid+1.5,high],[selMid-1.5,high],[selMid-1.5,low]]]};
- fill(path,box,'#ff5d9630');
+ fillLayer(path,box,'#ff5d9680','gk');
  stroke(path,lineParallel(low,selMid-1.5,selMid+1.5),'#ffc0d9',2);
  stroke(path,lineParallel(high,selMid-1.5,selMid+1.5),'#ffc0d9',2);
 }
@@ -276,11 +283,7 @@ if(gs)for(let y=-90;y<=90;y+=gs){
  const start=selMid-1.5,end=selMid+1.5;
  if(start>=-180&&end<=180)stroke(path,lineParallel(y,start,end),'#ff99bd8c',.85);
 }
- cx.restore();
 }
-
-
-cx.restore(); // return from master coordinate transparency to opaque map markers
 if(point){let xy=p(point);if(xy&&d3.geoDistance(point,center)<(mode==='globe'?Math.PI/2:Math.PI)){cx.beginPath();cx.arc(xy[0],xy[1],5,0,2*Math.PI);cx.fillStyle='#ffffff';cx.fill();cx.strokeStyle='#e94049';cx.lineWidth=2;cx.stroke()}}
 window.__geoAtlasDrawn=true;$('zoomlabel').textContent=Math.round(zoom*100)+' %';$('zoom').value=Math.round(zoom*100);$('orientation').textContent=(mode==='globe'?'3D-Globus':mode==='world'?'2D-Weltkarte':'Transversal-Mercator')+' · '+center[0].toFixed(1)+'° Länge / '+center[1].toFixed(1)+'° Breite';
 }
