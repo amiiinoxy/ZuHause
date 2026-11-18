@@ -28,10 +28,10 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <main>
 <section class="stage">
 <div class="stack"><button data-view="globe" class="active">3D-Globus</button><button data-view="world">2D-Weltkarte</button><button data-view="tm">Transversale Mercatorprojektion</button><button id="reset">Zurücksetzen</button></div>
-<div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Klicken: Koordinaten · Strg + Mausrad: Zoom</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
+<div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Mausrad über der Erde: Zoom · Klicken: Koordinaten</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
 <div class="stack"><button id="minus">−</button><input id="zoom" type="range" min="70" max="700" value="100" step="5" aria-label="Zoom"><button id="plus">+</button><strong id="zoomlabel">100 %</strong></div>
 <div class="stack"><button data-place="germany">Deutschland</button><button data-place="norway">Norwegen</button><button data-place="svalbard">Spitzbergen</button><button data-place="world">Welt</button></div>
-<div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit Strg + Mausrad oder den +/−-Tasten zoomst du die Karte. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
+<div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit dem Mausrad direkt über der Erde oder den +/−-Tasten zoomst du die Karte. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
 </section>
 <aside class="controls">
 <section class="panel"><h2>🗺️ Hintergrundkarte</h2>
@@ -179,7 +179,7 @@ document.querySelectorAll('[data-place]').forEach(b=>b.onclick=()=>{let targets=
 $('reset').onclick=()=>{center=[9,28];zoom=1;setView('globe')};
 $('plus').onclick=()=>setZoom(zoom*1.2);$('minus').onclick=()=>setZoom(zoom/1.2);$('zoom').oninput=e=>setZoom(+e.target.value/100);
 $('mark').onclick=()=>updatePoint(true);
-cv.addEventListener('wheel',e=>{if(!e.ctrlKey&&!e.altKey)return;e.preventDefault();setZoom(zoom*(e.deltaY<0?1.15:1/1.15))},{passive:false});
+cv.addEventListener('wheel',e=>{e.preventDefault();setZoom(zoom*(e.deltaY<0?1.15:1/1.15))},{passive:false});
 cv.addEventListener('pointerdown',e=>{drag=[e.clientX,e.clientY,e.clientX,e.clientY];dragged=false;cv.setPointerCapture(e.pointerId)});
 cv.addEventListener('pointermove',e=>{if(!drag)return;let dx=e.clientX-drag[0],dy=e.clientY-drag[1];if(Math.hypot(e.clientX-drag[2],e.clientY-drag[3])>5)dragged=true;center=[wrap(center[0]-dx*.25/zoom),Math.max(-88,Math.min(88,center[1]+dy*.25/zoom))];drag[0]=e.clientX;drag[1]=e.clientY;draw()});
 cv.addEventListener('pointerup',e=>{if(!dragged&&typeof d3!=='undefined'){let rect=cv.getBoundingClientRect(),p=projection(cv.clientWidth,cv.clientHeight),xy=p.invert([e.clientX-rect.left,e.clientY-rect.top]);if(xy&&Number.isFinite(xy[0])&&Number.isFinite(xy[1])&&xy[1]>=-90&&xy[1]<=90){point=[wrap(xy[0]),xy[1]];$('lon').value=point[0].toFixed(6);$('lat').value=point[1].toFixed(6);updatePoint()}}drag=null});
