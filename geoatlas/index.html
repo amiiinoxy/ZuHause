@@ -33,6 +33,7 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Mausrad über der Erde: Zoom · Klicken: Koordinaten</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
 <div class="stack"><button id="minus">−</button><input id="zoom" type="range" min="70" max="700" value="100" step="5" aria-label="Zoom"><button id="plus">+</button><strong id="zoomlabel">100 %</strong></div>
 <div class="opacity-controls" aria-label="Transparenz der Kartenebenen">
+ <div class="opacity-control" style="grid-column:1/-1"><label for="map-all-opacity"><span>Alle Koordinatenlinien & Nummern (jede Farbe)</span><strong id="map-all-value">70 %</strong></label><input id="map-all-opacity" type="range" min="0" max="100" step="5" value="70" aria-label="Gesamtdeckkraft aller Koordinatenlinien und Beschriftungen"></div>
  <div class="opacity-control"><label for="map-utm-opacity"><span style="color:#f4cb72">UTM</span><strong id="map-utm-value">45 %</strong></label><input id="map-utm-opacity" type="range" min="0" max="100" step="5" value="45" aria-label="UTM Deckkraft unter der Karte"></div>
  <div class="opacity-control"><label for="map-gk-opacity"><span style="color:#ff92ba">Gauß-Krüger</span><strong id="map-gk-value">30 %</strong></label><input id="map-gk-opacity" type="range" min="0" max="100" step="5" value="30" aria-label="GK Deckkraft unter der Karte"></div>
 </div>
@@ -214,6 +215,9 @@ const textured=mode==='globe'&&$('earthtex').checked&&drawTexturedEarth(w,h,p);
 if(mode==='globe'){if(!textured)fill(path,sphere,'#1b5272');stroke(path,sphere,'#86c8db',1.1)}
 if(!textured&&$('land').checked&&land)fill(path,land,'#7eaf92');
 if($('borders').checked&&borders)stroke(path,borders,textured?'#ccebf788':'#305a4b',textured?.55:.75);
+// Global visibility controls every coordinate overlay, regardless of its colour.
+const overlayAlpha=Number($('map-all-opacity').value)/100;
+cx.save();cx.globalAlpha=overlayAlpha;
 if($('grid').checked){
 let ls=+$('latstep').value,os=+$('lonstep').value;
 for(let l=-180;l<180;l+=os)stroke(path,lineMeridian(l,-90,90),'#c6e9ed65',os===1?.35:.6);
@@ -221,7 +225,7 @@ for(let b=-90;b<=90;b+=ls)stroke(path,lineParallel(b),'#d2f0e580',b===0?1.2:.7);
 if($('geolabel').checked){for(let l=-180;l<180;l+=os)text(p,l,Math.max(-70,center[1]-20),l+'°','#d6edfc',9);for(let b=-90;b<=90;b+=ls)text(p,center[0]+24,b,b+'°','#d3fae5',9)}
 }
 if($('utm').checked){
-cx.save();cx.globalAlpha=Number($('utmopacity').value)/100;
+cx.save();cx.globalAlpha=overlayAlpha*Number($('utmopacity').value)/100;
 if($('uzones').checked)for(let l=-180;l<=180;l+=6)stroke(path,lineMeridian(l,-80,84),'#efc36b99',1);
 if($('ubands').checked)for(const a of [-80,...limits.map(x=>x.max)])stroke(path,lineParallel(a),'#edcc7a94',.9);
 if($('special').checked){for(const [l,a,b] of [[3,56,64],[12,56,64],[0,72,84],[9,72,84],[21,72,84],[33,72,84],[42,72,84]])stroke(path,lineMeridian(l,a,b),'#ffde80',2.4)}
@@ -231,7 +235,7 @@ $('utmdesc').textContent='Gewählt: '+z+band+(cells.length?'':' · Sonderzone in
  cx.restore();
 }
 if($('gk').checked){
-cx.save();cx.globalAlpha=Number($('gkopacity').value)/100;
+cx.save();cx.globalAlpha=overlayAlpha*Number($('gkopacity').value)/100;
 const chosen=+$('gzone').value,all=$('allgk').checked;
 const mids=all?Array.from({length:120},(_,i)=>i-59):[chosen];
 for(const n of mids){
@@ -275,6 +279,8 @@ if(gs)for(let y=-90;y<=90;y+=gs){
  cx.restore();
 }
 
+
+cx.restore(); // return from master coordinate transparency to opaque map markers
 if(point){let xy=p(point);if(xy&&d3.geoDistance(point,center)<(mode==='globe'?Math.PI/2:Math.PI)){cx.beginPath();cx.arc(xy[0],xy[1],5,0,2*Math.PI);cx.fillStyle='#ffffff';cx.fill();cx.strokeStyle='#e94049';cx.lineWidth=2;cx.stroke()}}
 window.__geoAtlasDrawn=true;$('zoomlabel').textContent=Math.round(zoom*100)+' %';$('zoom').value=Math.round(zoom*100);$('orientation').textContent=(mode==='globe'?'3D-Globus':mode==='world'?'2D-Weltkarte':'Transversal-Mercator')+' · '+center[0].toFixed(1)+'° Länge / '+center[1].toFixed(1)+'° Breite';
 }
@@ -300,6 +306,7 @@ cv.addEventListener('pointermove',e=>{if(!drag)return;let dx=e.clientX-drag[0],d
 cv.addEventListener('pointerup',e=>{if(!dragged&&typeof d3!=='undefined'){let rect=cv.getBoundingClientRect(),p=projection(cv.clientWidth,cv.clientHeight),xy=p.invert([e.clientX-rect.left,e.clientY-rect.top]);if(xy&&Number.isFinite(xy[0])&&Number.isFinite(xy[1])&&xy[1]>=-90&&xy[1]<=90){point=[wrap(xy[0]),xy[1]];$('lon').value=point[0].toFixed(6);$('lat').value=point[1].toFixed(6);updatePoint()}}drag=null});
 cv.addEventListener('pointercancel',()=>drag=null);
 document.querySelectorAll('input[type=checkbox],select').forEach(el=>el.addEventListener('change',draw));
+$('map-all-opacity').addEventListener('input',e=>{$('map-all-value').textContent=e.target.value+' %';draw()});
 for(const [mainId,mapId,mainLabel,mapLabel] of [
  ['utmopacity','map-utm-opacity','utmopacityvalue','map-utm-value'],
  ['gkopacity','map-gk-opacity','gkopacityvalue','map-gk-value']
