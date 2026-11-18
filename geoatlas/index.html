@@ -216,13 +216,12 @@ for(let b=-90;b<=90;b+=ls)stroke(path,lineParallel(b),'#d2f0e580',b===0?1.2:.7);
 if($('geolabel').checked){for(let l=-180;l<180;l+=os)text(p,l,Math.max(-70,center[1]-20),l+'°','#d6edfc',9);for(let b=-90;b<=90;b+=ls)text(p,center[0]+24,b,b+'°','#d3fae5',9)}
 }
 if($('utm').checked){
-// UTM line strokes remain independent of opacity.
-if($('uzones').checked)for(let l=-180;l<=180;l+=6)stroke(path,lineMeridian(l,-80,84),'#efc36b99',1);
-if($('ubands').checked)for(const a of [-80,...limits.map(x=>x.max)])stroke(path,lineParallel(a),'#edcc7a94',.9);
-if($('special').checked){for(const [l,a,b] of [[3,56,64],[12,56,64],[0,72,84],[9,72,84],[21,72,84],[33,72,84],[42,72,84]])stroke(path,lineMeridian(l,a,b),'#ffde80',2.4)}
-let z=+$('zone').value,band=$('band').value;let cells=utmCells(z,band);for(let poly of cells){fillLayer(path,poly,'#f4c45e80','utm');stroke(path,poly,'#ffe59a',2)}
+// Subtle regular UTM grid: no bold selected-zone outlines or thick special-zone strokes.
+if($('uzones').checked)for(let l=-180;l<=180;l+=6)stroke(path,lineMeridian(l,-80,84),'rgba(239,195,107,.55)',.8);
+if($('ubands').checked)for(const a of [-80,...limits.map(x=>x.max)])stroke(path,lineParallel(a),'rgba(237,204,122,.50)',.75);
+let z=+$('zone').value,band=$('band').value,cells=utmCells(z,band);
 if($('ulabel').checked){for(let i=1;i<=60;i++)text(p,-183+i*6,2,String(i),'#ffdf9a',10);for(const bb of limits)text(p,center[0]+18,(bb.min+bb.max)/2,bb.b,'#ffdf9a',10)}
-$('utmdesc').textContent='Gewählt: '+z+band+(cells.length?'':' · Sonderzone in diesem Breitenband nicht vorhanden');
+$('utmdesc').textContent='Gewählt: '+z+band+(cells.length?'':' · Sonderzone in diesem Breitenband nicht vorhanden')+' · keine dicke Hervorhebung';
 }
 if($('gk').checked){
 // GK line strokes remain independent of opacity.
@@ -267,6 +266,9 @@ if(gs)for(let y=-90;y<=90;y+=gs){
  if(start>=-180&&end<=180)stroke(path,lineParallel(y,start,end),'#ff99bd8c',.85);
 }
 }
+// Greenwich is a geographic reference meridian, independent of UTM/GK visibility.
+stroke(path,lineMeridian(0,-90,90),'#35e0ff',2.7);
+text(p,0,64,'Greenwich · 0°','#5cf1ff',12);
 if(point){let xy=p(point);if(xy&&d3.geoDistance(point,center)<(mode==='globe'?Math.PI/2:Math.PI)){cx.beginPath();cx.arc(xy[0],xy[1],5,0,2*Math.PI);cx.fillStyle='#ffffff';cx.fill();cx.strokeStyle='#e94049';cx.lineWidth=2;cx.stroke()}}
 window.__geoAtlasDrawn=true;$('zoomlabel').textContent=Math.round(zoom*100)+' %';$('zoom').value=Math.round(zoom*100);$('orientation').textContent=(mode==='globe'?'3D-Globus':mode==='world'?'2D-Weltkarte':'Transversal-Mercator')+' · '+center[0].toFixed(1)+'° Länge / '+center[1].toFixed(1)+'° Breite';
 }
