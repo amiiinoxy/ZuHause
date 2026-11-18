@@ -35,9 +35,9 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 </section>
 <section class="panel"><h2 class="accent2">3°-GK-Prinzip · weltweit</h2><label><input id="gk" type="checkbox" checked>GK einblenden</label>
 <div class="cols" style="margin-top:10px"><div class="field"><label for="gzone">Streifen</label><select id="gzone"></select></div><div class="field"><label for="gstep">GK-Breitengrade</label><select id="gstep"><option value="0">Aus</option><option value="1">1°</option><option value="5" selected>5°</option><option value="10">10°</option><option value="15">15°</option></select></div></div>
-<div class="cols" style="margin-top:10px"><div class="field"><label for="gband">Geografisches Breitenband</label><select id="gband"></select></div><div class="field"><label for="gbandstep">Bandhöhe</label><select id="gbandstep"><option value="10" selected>10° · 18 Bänder</option><option value="15">15° · 12 Bänder</option><option value="30">30° · 6 Bänder</option></select></div></div>
-<div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Alle Zonen</label><label><input id="gbands" type="checkbox" checked>Alle Bänder</label><label><input id="glabel" type="checkbox" checked>Zonennummern</label><label><input id="gbandlabel" type="checkbox" checked>Bandnummern</label></div>
-<p class="muted">Weltweites schematisches 3°-Meridianstreifennetz. Die Breitenbänder (z. B. 18 × 10°) und Bandnummern sind ausschließlich Lernhilfen, keine offiziellen GK-Bänder. Die globalen Zonen-Indizes außerhalb Deutschlands sind ebenfalls nicht amtlich. DHDN/GK benötigt das Bessel-Ellipsoid und eine Datumstransformation.</p>
+<div class="cols" style="margin-top:10px"><div class="field"><label for="gband">GK-Breitenstreifen (B-Nummer)</label><select id="gband"></select></div><div class="field"><label for="gbandstep">Bandhöhe</label><select id="gbandstep"><option value="10" selected>10° · 18 Bänder</option><option value="15">15° · 12 Bänder</option><option value="30">30° · 6 Bänder</option></select></div></div>
+<div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Alle Zonen</label><label><input id="gbands" type="checkbox" checked>Alle Bänder</label><label><input id="glabel" type="checkbox" checked>Zonennummern</label><label><input id="gbandlabel" type="checkbox" checked>Breitenstreifen-Nummern (B01 …)</label></div>
+<p class="muted">Weltweites schematisches 3°-Meridianstreifennetz. Die nummerierten Breitenstreifen B01–B18 (bei 10°; vom Südpol nach Norden) sind ausschließlich Lernhilfen, keine offiziellen GK-Bänder. Die globalen Zonen-Indizes außerhalb Deutschlands sind ebenfalls nicht amtlich. DHDN/GK benötigt das Bessel-Ellipsoid und eine Datumstransformation.</p>
 </section>
 <section class="panel"><h2>📍 Punktkoordinaten</h2>
 <div class="cols"><div class="field"><label for="lat">Breite (°)</label><input id="lat" type="number" min="-90" max="90" step="0.000001" value="50.3569"></div><div class="field"><label for="lon">Länge (°)</label><input id="lon" type="number" min="-180" max="180" step="0.000001" value="7.589"></div></div>
@@ -131,7 +131,15 @@ if($('gbands').checked){
  stroke(path,lineParallel(high,selMid-1.5,selMid+1.5),'#ffc0d9',2);
 }
 if($('gbandlabel').checked){
- for(let y=-90,i=1;y<90;y+=step,i++)text(p,wrap(center[0]+18),y+step/2,String(i).padStart(2,'0'),'#ffcae0',10);
+ // Number each latitude strip at a visible reference longitude, not just in the dropdown.
+ // B01 starts at the South Pole and numbering increases northwards.
+ const anchor=wrap(center[0]+18);
+ for(let y=-90,i=1;y<90;y+=step,i++){
+   const number='B'+String(i).padStart(2,'0'),selected=i===band;
+   text(p,anchor,y+step/2,number,selected?'#ffffff':'#ffcae0',selected?13:11);
+   // At higher zoom show the band number inside the selected 3-degree GK strip.
+   if(zoom>=3)text(p,wrap(selMid),y+step/2,number,selected?'#ffffff':'#ffb9d4',11);
+ }
 }
 const gs=+$('gstep').value;
 if(gs)for(let y=-90;y<=90;y+=gs){
