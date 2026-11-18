@@ -31,11 +31,11 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <div class="map"><canvas id="map" aria-label="Interaktive Weltkarte"></canvas><div class="overlay">Ziehen: drehen/verschieben · Mausrad über der Erde: Zoom · Klicken: Koordinaten</div><div class="overlay bottom" id="orientation">Europa · 3D</div></div>
 <div class="stack"><button id="minus">−</button><input id="zoom" type="range" min="70" max="700" value="100" step="5" aria-label="Zoom"><button id="plus">+</button><strong id="zoomlabel">100 %</strong></div>
 <div class="stack"><button data-place="germany">Deutschland</button><button data-place="norway">Norwegen</button><button data-place="svalbard">Spitzbergen</button><button data-place="world">Welt</button></div>
-<div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit dem Mausrad direkt über der Erde oder den +/−-Tasten zoomst du die Karte. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
+<div class="note">Auf dem Desktop scrollst du die rechte Einstellungsleiste unabhängig von der links stehenden Karte. Mit dem Mausrad direkt über der Erde oder den +/−-Tasten zoomst du die Karte. Der zuschaltbare Sternenhintergrund ist eine dekorative, nicht astronomisch positionsgetreue Darstellung. Die 3D-Ansicht verwendet eine orthografische Kugelprojektion; die Erde wird dafür schematisch kugelförmig dargestellt. Die 2D-Weltkarte ist geografisch (Plate Carrée). Die Transversal-Mercator-Ansicht zeigt die Projektionsgeometrie, nicht automatisch amtliche GK-Koordinaten.</div>
 </section>
 <aside class="controls">
 <section class="panel"><h2>🗺️ Hintergrundkarte</h2>
-<div class="row"><label><input id="land" type="checkbox" checked>Landflächen</label><label><input id="borders" type="checkbox" checked>Ländergrenzen</label><label><input id="grid" type="checkbox" checked>Gradnetz</label></div>
+<div class="row"><label><input id="land" type="checkbox" checked>Landflächen</label><label><input id="borders" type="checkbox" checked>Ländergrenzen</label><label><input id="grid" type="checkbox" checked>Gradnetz</label><label><input id="space" type="checkbox" checked>Weltraum & Sterne (3D)</label></div>
 <p class="muted" id="mapstatus">Vereinfachte Weltkarte wird geladen …</p>
 <div class="cols"><div class="field"><label for="latstep">Breitengrade</label><select id="latstep"><option>1</option><option>5</option><option selected>10</option><option>15</option><option>30</option></select></div><div class="field"><label for="lonstep">Längengrade</label><select id="lonstep"><option>1</option><option>5</option><option selected>10</option><option>15</option><option>30</option></select></div></div>
 <label style="margin-top:10px"><input id="geolabel" type="checkbox" checked>Gradnetz beschriften</label>
@@ -97,10 +97,35 @@ if(lat.b==='V'&&z===31)hi=3;if(lat.b==='V'&&z===32){lo=3;hi=12;}if(lat.b==='V'&&
 if(lat.b==='X'&&z>=31&&z<=37){let bounds={31:[0,9],32:null,33:[9,21],34:null,35:[21,33],36:null,37:[33,42]};if(bounds[z]===null)return[];[lo,hi]=bounds[z];}
 }
 return [{type:'Polygon',coordinates:[[[lo,lat.min],[hi,lat.min],[hi,lat.max],[lo,lat.max],[lo,lat.min]]]}]}
+
+// Procedural, deterministic star field with atmospheric halo. No image download or API required.
+const starPositions=Array.from({length:340},(_,i)=>{
+ const fract=x=>x-Math.floor(x);
+ const x=fract(Math.sin((i+1)*127.1)*43758.5453);
+ const y=fract(Math.sin((i+1)*311.7)*96321.9124);
+ const bright=.25+.75*fract(Math.sin((i+1)*74.7)*58418.35);
+ return [x,y,bright];
+});
+function drawSpace(w,h,p){
+ cx.fillStyle='#030914';cx.fillRect(0,0,w,h);
+ let nebula=cx.createRadialGradient(w*.78,h*.24,2,w*.78,h*.24,Math.max(w,h)*.78);
+ nebula.addColorStop(0,'#182847');nebula.addColorStop(.35,'#0d1b36');nebula.addColorStop(1,'#030914');
+ cx.fillStyle=nebula;cx.fillRect(0,0,w,h);
+ for(const [sx,sy,brightness] of starPositions){
+  const x=sx*w,y=sy*h,r=brightness>.9?1.2:.45;
+  cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);
+  cx.fillStyle='rgba(220,237,255,'+(.25+brightness*.65)+')';cx.fill();
+ }
+ const radius=p.scale(),xy=p.translate(),glow=cx.createRadialGradient(xy[0],xy[1],radius*.90,xy[0],xy[1],radius*1.28);
+ glow.addColorStop(0,'rgba(36,176,225,.24)');glow.addColorStop(.45,'rgba(34,137,195,.15)');
+ glow.addColorStop(1,'rgba(7,26,53,0)');
+ cx.fillStyle=glow;cx.beginPath();cx.arc(xy[0],xy[1],radius*1.28,0,Math.PI*2);cx.fill();
+}
 function draw(){
 if(typeof d3==='undefined'){$('mapstatus').textContent='Kartenbibliothek nicht geladen. Internetverbindung prüfen.';return}
 const {w,h}=dimensions();cx.clearRect(0,0,w,h);const p=projection(w,h),path=d3.geoPath(p,cx),sphere={type:'Sphere'};
 cx.fillStyle='#0a2943';cx.fillRect(0,0,w,h);
+if(mode==='globe'&&$('space').checked)drawSpace(w,h,p);
 if(mode==='globe'){fill(path,sphere,'#1b5272');stroke(path,sphere,'#86c8db',1.1)}
 if($('land').checked&&land)fill(path,land,'#7eaf92');
 if($('borders').checked&&borders)stroke(path,borders,'#305a4b',.75);
