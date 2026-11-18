@@ -33,10 +33,10 @@ small,.note{color:#a8c2d3;line-height:1.5}main{display:grid;grid-template-column
 <label style="margin-top:10px"><input id="special" type="checkbox" checked>Sonderzonen Norwegen/Spitzbergen</label>
 <p class="muted" id="utmdesc"></p>
 </section>
-<section class="panel"><h2 class="accent2">Gauß-Krüger · Deutschland</h2><label><input id="gk" type="checkbox" checked>GK einblenden</label>
-<div class="cols" style="margin-top:10px"><div class="field"><label for="gzone">Streifen</label><select id="gzone"><option value="2">2 · 6° Ost</option><option value="3" selected>3 · 9° Ost</option><option value="4">4 · 12° Ost</option><option value="5">5 · 15° Ost</option></select></div><div class="field"><label for="gstep">GK-Breitengrade</label><select id="gstep"><option value="0">Aus</option><option value="1">1°</option><option value="5" selected>5°</option><option value="10">10°</option><option value="15">15°</option></select></div></div>
-<div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Streifen 2–5</label><label><input id="glabel" type="checkbox" checked>Nummern</label></div>
-<p class="muted">Deutsche historische 3°-Streifen; amtliche DHDN/GK-Koordinaten benötigen das Bessel-Ellipsoid und eine Datumstransformation.</p>
+<section class="panel"><h2 class="accent2">3°-GK-Prinzip · weltweit</h2><label><input id="gk" type="checkbox" checked>GK einblenden</label>
+<div class="cols" style="margin-top:10px"><div class="field"><label for="gzone">Streifen</label><select id="gzone"></select></div><div class="field"><label for="gstep">GK-Breitengrade</label><select id="gstep"><option value="0">Aus</option><option value="1">1°</option><option value="5" selected>5°</option><option value="10">10°</option><option value="15">15°</option></select></div></div>
+<div class="row" style="margin-top:10px"><label><input id="allgk" type="checkbox" checked>Alle 120 Streifen weltweit</label><label><input id="glabel" type="checkbox" checked>Nummern</label></div>
+<p class="muted">Geometrisches weltweites 3°-Modell mit Mittelmeridianen bei 3°·n (n = −59 bis 60, 120 Streifen einschließlich Datumsgrenze). Die Nummern außerhalb Deutschlands sind nur Modell-Indizes, keine weltweit amtlichen GK-Zonen. DHDN/GK benötigt das Bessel-Ellipsoid und eine Datumstransformation.</p>
 </section>
 <section class="panel"><h2>📍 Punktkoordinaten</h2>
 <div class="cols"><div class="field"><label for="lat">Breite (°)</label><input id="lat" type="number" min="-90" max="90" step="0.000001" value="50.3569"></div><div class="field"><label for="lon">Länge (°)</label><input id="lon" type="number" min="-180" max="180" step="0.000001" value="7.589"></div></div>
@@ -56,6 +56,7 @@ let mode='globe',center=[9,28],zoom=1,point=[7.589,50.3569],land=null,borders=nu
 const bands='CDEFGHJKLMNPQRSTUVWX'.split(''),limits=bands.map((b,i)=>({b,min:-80+i*8,max:i===19?84:-72+i*8}));
 for(let i=1;i<=60;i++)$('zone').add(new Option(i+' · '+(-183+i*6)+'°',i));$('zone').value='32';
 limits.forEach(x=>$('band').add(new Option(x.b+' · '+x.min+'° bis '+x.max+'°',x.b)));$('band').value='U';
+for(let n=-59;n<=60;n++){let mer=n*3,hem=mer<0?' W':mer>0?' O':'',title=(n>=2&&n<=5?'GK '+n:'Modell '+n)+' · '+Math.abs(mer)+'°'+hem;$('gzone').add(new Option(title,n));}$('gzone').value='3';
 const rad=Math.PI/180,wrap=x=>((x+180)%360+360)%360-180;
 function utmZone(lon,lat){if(lat<-80||lat>84)return null;let n=Math.max(1,Math.min(60,Math.floor((lon+180)/6)+1));
 if($('special').checked){if(lat>=56&&lat<64&&lon>=3&&lon<12)n=32;if(lat>=72&&lat<84&&lon>=0&&lon<42)n=lon<9?31:lon<21?33:lon<33?35:37;}return n}
@@ -102,16 +103,26 @@ if($('ulabel').checked){for(let i=1;i<=60;i++)text(p,-183+i*6,2,String(i),'#ffdf
 $('utmdesc').textContent='Gewählt: '+z+band+(cells.length?'':' · Sonderzone in diesem Breitenband nicht vorhanden');
 }
 if($('gk').checked){
-// German 3-degree GK strips: true strip boundaries at central meridian ±1.5 degrees.
-const chosen=+$('gzone').value,zz=$('allgk').checked?[2,3,4,5]:[chosen];
-for(const n of zz){const mid=3*n,a=mid-1.5,b=mid+1.5;
-const rectangle={type:'Polygon',coordinates:[[[a,47],[b,47],[b,55],[a,55],[a,47]]]};
-if(n===chosen)fill(path,rectangle,'#f66a9a25');
-stroke(path,lineMeridian(a,47,55),'#ffabc5',1.4,[5,3]);
-stroke(path,lineMeridian(b,47,55),'#ffabc5',1.4,[5,3]);
-stroke(path,lineMeridian(mid,47,55),n===chosen?'#ff4b8f':'#ff87b0',n===chosen?3:1.8);
-if($('glabel').checked)text(p,mid,53,'GK '+n,'#ffd1e1',11)}
-let gs=+$('gstep').value,mid=chosen*3;if(gs)for(let b=0;b<=90;b+=gs)if(b>=47&&b<=55)stroke(path,lineParallel(b,mid-1.5,mid+1.5),'#ff8bb580',.7);
+const chosen=+$('gzone').value,all=$('allgk').checked;
+const mids=all?Array.from({length:120},(_,i)=>i-59):[chosen];
+for(const n of mids){
+ const mid=3*n,a=mid-1.5,b=mid+1.5,selected=n===chosen;
+ // Each strip is 3° wide, centred exactly on 3n°. No geographical latitude cut-off.
+ stroke(path,lineMeridian(a,-89.5,89.5),'#f5a5c280',all?.7:1.5,[5,4]);
+ if(!all)stroke(path,lineMeridian(b,-89.5,89.5),'#f5a5c280',1.5,[5,4]);
+ if(!all||selected)stroke(path,lineMeridian(mid,-89.5,89.5),selected?'#ff458d':'#ea77a7',selected?2.6:1);
+ if($('glabel').checked&&(selected||!all||(zoom>=2.5&&Math.abs(wrap(mid-center[0]))<55&&n%3===0)||(zoom<2.5&&n%12===0))){
+   const num=n>=2&&n<=5?'GK '+n:String(n);
+   text(p,wrap(mid),0,num,'#ffb4d1',selected?12:9);
+ }
+}
+const selMid=chosen*3;
+if(all)stroke(path,lineMeridian(selMid,-89.5,89.5),'#ff458d',3);
+const gs=+$('gstep').value;
+if(gs)for(let y=-90;y<=90;y+=gs){
+ const start=selMid-1.5,end=selMid+1.5;
+ if(start>=-180&&end<=180)stroke(path,lineParallel(y,start,end),'#ff99bd8c',.85);
+}
 }
 if(point){let xy=p(point);if(xy&&d3.geoDistance(point,center)<(mode==='globe'?Math.PI/2:Math.PI)){cx.beginPath();cx.arc(xy[0],xy[1],5,0,2*Math.PI);cx.fillStyle='#ffffff';cx.fill();cx.strokeStyle='#e94049';cx.lineWidth=2;cx.stroke()}}
 window.__geoAtlasDrawn=true;$('zoomlabel').textContent=Math.round(zoom*100)+' %';$('zoom').value=Math.round(zoom*100);$('orientation').textContent=(mode==='globe'?'3D-Globus':mode==='world'?'2D-Weltkarte':'Transversal-Mercator')+' · '+center[0].toFixed(1)+'° Länge / '+center[1].toFixed(1)+'° Breite';
